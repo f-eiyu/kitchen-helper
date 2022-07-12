@@ -5,7 +5,8 @@ const Ingredient = require("../models/ingredient.js");
 
 // ========== Routes ==========
 router.get("/", (req, res) => {
-  res.send("hello kitchen!");
+  Ingredient.find({})
+    .then(ings => res.render("./kitchen/index.liquid", { ings }));
 });
 
 // ========== Exports ==========

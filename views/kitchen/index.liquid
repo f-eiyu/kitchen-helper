@@ -1,0 +1,9 @@
+{% layout "layout.liquid" %}
+
+{% block title %}What's in the Kitchen?{% endblock %}
+
+{% block content %}
+  {% for ing in ings %}
+    <p>{{ing.name}}</p>
+  {% endfor %}
+{% endblock %}
