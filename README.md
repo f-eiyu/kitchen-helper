@@ -55,7 +55,7 @@ As a user, I want to...
 
 ## General Workflow
 All of the functionalities of this app can be enhanced with data from the other functionalities, but are at their core fundamentally independent, which  simplifies the workflow greatly.
-1. I will first implement the self-contained** portions of each of the three key features (My Kitchen, Recipe Assistant, and Shopping List) one by one, as well as creating a rudimentary user account system (users must create an account and log in to use the app).
+1. I will first implement the **self-contained** portions of each of the three key features (My Kitchen, Recipe Assistant, and Shopping List) one by one, as well as creating a rudimentary user account system (users must create an account and log in to use the app).
     - This will be considered my MVP.
 1. Once the MVP is working and the three components function independently, I will begin linking them together in the ways described above.
 1. I will begin by linking My Kitchen to the Shopping List, as it is the most straightforward relationship and will not break anything.
@@ -67,4 +67,6 @@ All of the functionalities of this app can be enhanced with data from the other 
 **Unanswered Question**: how to organize the db coherently? throwing every ingredient from every user into one big ingredients collection would be a huge mess. it makes the most sense to have a collection of ingredient _lists_, each linked to a specific user, but at that point we might be giving up some of the utility of mongoose, since we'd basically just be working with raw bson data inside individual ingredient lists?
 
 ## Wireframes
-coming soon!
+![Wireframes 1](./wireframes/Wireframe1.jpg)
+
+![Wireframes 2](./wireframes/Wireframe2.jpg)
