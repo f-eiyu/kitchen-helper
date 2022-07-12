@@ -14,7 +14,7 @@
   "name": "kitchen-helper",
   "description": "An app to keep track of what's in your fridge (and shelves, and pantry...) and what recipes could be made with it.",
   "version": "0.0.1",
-  "main": "fridge-server.js",
+  "main": "server.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
