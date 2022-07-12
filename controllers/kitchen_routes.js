@@ -75,7 +75,10 @@ router.put("/:id", (req, res) => {
       new: true,
       runValidators: true
     })
-    .then(ing => res.redirect(`./kitchen/${ing._id}`))
+    .then(ing => {
+      console.log(req.params.id, `./kitchen/${req.params.id}`);
+      res.redirect(`/kitchen/${req.params.id}`);
+    })
     .catch(err => {
       console.error(err);
       res.send(`Error in /kitchen/${req.params.ingId} EDIT -- check the terminal.`);

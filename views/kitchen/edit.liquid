@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="card">
-  <form action="/kitchen" method="POST">
+  <form action="/kitchen/{{ing._id}}?_method=PUT" method="POST">
     <fieldset>
       <legend>Editing {{ing.name}}</legend>
 
@@ -49,7 +49,7 @@
 
     <input
     type="submit"
-    value="Add to Kitchen"
+    value="Edit Ingredient"
     class="btn btn-success"
   />
   </form>

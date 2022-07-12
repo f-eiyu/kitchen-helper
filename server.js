@@ -38,9 +38,9 @@ app.get("/seed/ingredients", (req, res) => {
   res.send("seeded ingredients db<br /><br /><a href='/'>home</a>");
 });
 
-app.get("*", (req, res) => {
-  res.redirect("/");
-});
+// app.get("*", (req, res) => {
+//   res.redirect("/");
+// });
 
 // ========== Start server ==========
 const PORT = process.env.PORT;
