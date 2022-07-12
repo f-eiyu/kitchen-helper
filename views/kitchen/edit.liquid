@@ -1,0 +1,58 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Editing Ingredient{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block header %}Editing {{ing.name}}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/kitchen" method="POST">
+    <fieldset>
+      <legend>Editing {{ing.name}}</legend>
+
+      <label class="form-label" for="name">Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        value="{{ing.name}}"
+      />
+
+      <label class="form-label" for="amount">Amount</label>
+      <input
+        class="form-control"
+        type="text"
+        inputmode="numeric"
+        name="amount"
+        value="{{ing.amount}}"
+      />
+
+      <label class="form-label" for="tags">Tags</label>
+      <input
+        class="form-control"
+        type="text"
+        name="tags"
+        value="{{tagStr}}"
+      />
+
+      <label class="form-label" for="favorite">Favorite?</label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        name="favorite"
+        {% if ing.favorite == true %} checked {% endif %}
+      />
+    </fieldset>
+
+    <input
+    type="submit"
+    value="Add to Kitchen"
+    class="btn btn-success"
+  />
+  </form>
+</div>
+<a href="/kitchen">Back</a>
+{% endblock %}
