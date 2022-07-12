@@ -29,19 +29,35 @@
 
         <a href="/kitchen/{{ing._id}}"><span class="card-link"></span></a>
 
-        <nav class="navbar navbar-dark bg-dark">
-          <div class="container-fluid nav-div">
+        <ul class="nav justify-content-around ingredient-nav">
+          <li class="nav-item">
             <form action="/kitchen/{{ing._id}}?_method=DELETE" method="POST">
-              <input type="submit" value="Delete">
+              <input
+                type="submit"
+                value="Delete"
+                class="ingredient-nav-button"
+              />
             </form>
-            <form action="/kitchen/{{ing._id}}">
-              <input type="submit" value="Consume">
+          </li>
+          <li class="nav-item">
+            <form action="/">
+              <input
+                type="submit"
+                value="Consume"
+                class="ingredient-nav-button center-button"
+              />
             </form>
-            <form action="/kitchen/{{ing._id}}">
-              <input type="submit" value="Replenish">
+          </li>
+          <li class="nav-item">
+            <form action="/">
+              <input
+                type="submit"
+                value="Replenish"
+                class="ingredient-nav-button"
+              />
             </form>
-          </div>
-        </nav>
+          </li>
+        </div>
       </div>
     {% endfor %}
   {% endif %}

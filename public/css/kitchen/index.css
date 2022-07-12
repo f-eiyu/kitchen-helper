@@ -1,9 +1,10 @@
-/* temp, for kitchen */
 div.card {
   width: 30rem;
 
-  margin: 8px;
+  margin: 18px;
   padding: 0;
+
+  box-shadow: 2px 2px 8px #333;
 }
 
 div.card > h3 {
@@ -21,25 +22,35 @@ a > span.card-link {
   z-index: 1;
 }
 
-nav {
-  width: 100%;
-  border-radius: inherit;
+ul.ingredient-nav {
+  background-color: steelblue;
+  
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
 
   z-index: 2;
 }
 
-nav > div.nav-div {
-  display: flex;
-  align-self: flex-end;
-  align-content: center;
+ul.ingredient-nav > .nav-item {
+  height: 100%;
+  width: 33.3%;
 
-  bottom: 0;
-  left: 0;
+  margin: 0;
+}
 
-  height: 1em;
+input.ingredient-nav-button {
   width: 100%;
 
-  font-size: small;
+  background: none;
+  border: none;
+  color: white;
+}
 
-  border-radius: inherit;
+input.center-button {
+  border-right: solid white 1px;
+  border-left: solid white 1px;
+}
+
+#global-nav-kitchen {
+  background-color: #333;
 }

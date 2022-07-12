@@ -22,6 +22,11 @@ const seed = {
         amount: 250,
         tags: ["yummy"],
         favorite: true
+      }, {
+        name: "Cottage cheese",
+        amount: 1,
+        tags: ["don't buy again", "awful"],
+        favorite: false
       }
     ];
 
