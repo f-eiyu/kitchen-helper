@@ -1,0 +1,26 @@
+{% layout "layout.liquid" %}
+
+{% block title %}{{ing.name}}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block header %}{{ing.name}}{% endblock %}
+
+{% block content %}
+<div class="card">
+  {{ing.name}}
+  <ul>
+    <li>amount: {{ing.amount}}</li>
+    <li>tags:
+      {% for tag in ing.tags %}
+        {{tag}}, 
+      {% endfor %}  
+    </li>
+    <li>favorite? {{ing.favorite}}</li>
+    <li>updated: {{ing.updatedAt}}</li>
+    <li>id: {{ing._id}}</li>
+  </ul>
+</div>
+<a href="/kitchen">Back</a>
+{% endblock %}

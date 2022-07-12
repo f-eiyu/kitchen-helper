@@ -1,8 +1,10 @@
 body {
   padding: 2%;
+  
+  background: aliceblue;
 }
 
-#navbar {
+.nav-div {
   display: flex;
   justify-content: space-evenly;
 }

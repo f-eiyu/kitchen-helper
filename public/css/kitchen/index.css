@@ -1,0 +1,45 @@
+/* temp, for kitchen */
+div.card {
+  width: 30rem;
+
+  margin: 8px;
+  padding: 0;
+}
+
+div.card > h3 {
+  margin: 12px auto auto 12px;
+}
+
+a > span.card-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
+  z-index: 1;
+}
+
+nav {
+  width: 100%;
+  border-radius: inherit;
+
+  z-index: 2;
+}
+
+nav > div.nav-div {
+  display: flex;
+  align-self: flex-end;
+  align-content: center;
+
+  bottom: 0;
+  left: 0;
+
+  height: 1em;
+  width: 100%;
+
+  font-size: small;
+
+  border-radius: inherit;
+}
