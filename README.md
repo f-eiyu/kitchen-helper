@@ -25,7 +25,7 @@ As a user, I want to...
 
 ## Recipe Assistant
 As a user, I want to...
-1. have some recipes come preinstalled on the app, if I so choose. [SEED from recipe API]
+1. have some recipes come preinstalled on the app, if I want them. [SEED from recipe API]
 1. add my own recipes to the app. [NEW]
 1. be able to view recipes or filter with various custom parameters. [SHOW]
     - **Core design concept: given the ingredients and their quantities in My Kitchen, display all the recipes that can be made with them**.
@@ -36,9 +36,10 @@ As a user, I want to...
     - edit my rating. [EDIT]
     - edit or delete comments/notes. [EDIT/DELETE]
 1. automatically add missing recipe ingredients to the Shopping List. [UPDATE]
+1. "favorite" a recipe for easy access/visibility.
+1. tag and categorize recipes -- "breakfast", "dinner", "snack", "dessert", etc. [EDIT/SHOW]
 
 ### Stretch Goals
-1. tag and categorize recipes -- "breakfast", "dinner", "snack", "dessert", etc. [EDIT/SHOW]
 1. set certain ingredients in recipes as "optional", for enhanced filtering and meal planning. [SHOW]
 1. filter recipes that are only missing optional ingredients, or missing up to some number of ingredients. [SHOW]
 1. share some or all of my recipes with a friend, so that they can view them from their account as well. [AUTH]
@@ -64,9 +65,73 @@ All of the functionalities of this app can be enhanced with data from the other 
 1. If I have extra time after this, I'll tackle the stretch goals in whatever order makes the most logical sense for implementation.
 
 ## Models
-**Unanswered Question**: how to organize the db coherently? throwing every ingredient from every user into one big ingredients collection would be a huge mess. it makes the most sense to have a collection of ingredient _lists_, each linked to a specific user, but at that point we might be giving up some of the utility of mongoose, since we'd basically just be working with raw bson data inside individual ingredient lists?
+### User
+- username
+- password hash
+- first name
+- [ingredients]
+- [recipes]
+- [shopping list items]
+- id
+
+### Ingredient
+- name
+- amount
+- [tags]
+- timestamp
+- "favorite" flag
+- id
+- added by (stretch goal)
+- expiration (stretch goal)
+
+### Recipe
+- name
+- [{ingredient name, ingredient amount}]
+    - "optional" flag (stretch goal)
+- "favorite" flag
+- step-by-step
+- [tags]
+- [comments]
+- id
+- added by (stretch goal)
+
+### Shopping List Item
+- name
+- amount
+- price (stretch goal)
+- id
+
+### ERD
+![ERD](./planning/ERD.jpg)
+
+## Route Table
+| Name      | Path              | HTTP  | Description |
+| ----      | ----              | ----  | ----------- |
+| Index     | /kitchen          | GET   | Displays all ingredients in My Kitchen |
+| New       | /kitchen/new      | GET   | Displays form to add an ingredient to My Kitchen |
+| Create    | /kitchen          | POST  | Adds a new ingredient to My Kitchen |
+| Show      | /kitchen/:id      | GET   | Shows information on one specific ingredient |
+| Edit      | /kitchen/:id/edit | GET   | Displays form to edit information of one ingredient |
+| Update    | /kitchen/:id      | PUT   | Updates information of one ingredient |
+| Destroy   | /kitchen/:id      | DELETE| Deletes one ingredient completely |
+| &nbsp;| | | |
+| Index     | /recipes          | GET   | Displays all recipes in the Recipe Assistant |
+| New       | /recipes/new      | GET   | Displays form to add a recipe to the Recipe Assistant |
+| Create    | /recipes          | POST  | Adds a new recipe to the Recipe Assistant |
+| Show      | /recipes/:id      | GET   | Shows information on one specific recipe |
+| Edit      | /recipes/:id/edit | GET   | Displays form to edit information of one recipe |
+| Update    | /recipes/:id      | PUT   | Updates information of one recipe |
+| Destroy   | /recipes/:id      | DELETE| Deletes one recipe completely |
+| &nbsp;| | | |
+| Index     | /shoplist         | GET   | Displays the Shopping List |
+| New       | /shoplist/new     | GET   | Displays form to add an item to the Shopping List |
+| Create    | /shoplist         | POST  | Adds a new item to the Shopping List |
+| Show      | /shoplist/:id     | GET   | Shows information on one Shopping List item |
+| Edit      | /shoplist/:id/edit| GET   | Displays form to edit information of one Shopping List item |
+| Update    | /shoplist/:id      | PUT   | Updates information of one Shopping List item|
+| Destroy   | /shoplist/:id      | DELETE| Deletes one Shopping List item completely |
 
 ## Wireframes
-![Wireframes 1](./wireframes/Wireframe1.jpg)
+![Wireframes 1](./planning/Wireframe1.jpg)
 
-![Wireframes 2](./wireframes/Wireframe2.jpg)
+![Wireframes 2](./planning/Wireframe2.jpg)
