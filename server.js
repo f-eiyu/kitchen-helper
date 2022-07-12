@@ -19,16 +19,23 @@ app.use(express.static('public'))
 // ========== Routes ==========
 app.use("/kitchen", kitchenRoutes);
 
+// temporary routes, to be reorganized later
 app.get("/", (req, res) => {
   res.send("hello app!");
-})
+});
+
+const seed = require("./models/seed.js");
+app.get("/seed/ingredients", (req, res) => {
+  seed.seedIngredients();
+  res.send("seeded ingredients db");
+});
 
 app.get("*", (req, res) => {
   res.redirect("/");
-})
+});
 
 // ========== Start server ==========
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
-})
+});
