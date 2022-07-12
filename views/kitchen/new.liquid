@@ -1,0 +1,55 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Adding Ingredient{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block header %}Add to Kitchen{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/kitchen" method="POST">
+    <fieldset>
+      <legend>Add what to your kitchen?</legend>
+
+      <label class="form-label" for="name">Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+      />
+
+      <label class="form-label" for="amount">Amount</label>
+      <input
+        class="form-control"
+        type="text"
+        inputmode="numeric"
+        name="amount"
+      />
+
+      <label class="form-label" for="tags">Tags</label>
+      <input
+        class="form-control"
+        type="text"
+        name="tags"
+        placeholder="Separate tags with commas"
+      />
+
+      <label class="form-label" for="favorite">Favorite?</label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        name="favorite"
+      />
+    </fieldset>
+
+    <input
+    type="submit"
+    value="Add to Kitchen"
+    class="btn btn-success"
+  />
+  </form>
+</div>
+<a href="/kitchen">Back</a>
+{% endblock %}

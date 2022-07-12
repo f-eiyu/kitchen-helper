@@ -8,6 +8,11 @@ body {
   background: aliceblue;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
 #global-nav {
   display: flex;
   justify-content: flex-start;
