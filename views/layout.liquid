@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html color-mode="light">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +17,8 @@
       <h1>{% block header %}{% endblock %}</h1>
       {% block content %}{% endblock %}
 
+      <button id="test">darkmode toggle</button>
+
       <ul class="nav justify-content-center fixed-bottom" id="global-nav">
         <li class="nav-item" id="global-nav-home">
           <a class="nav-link" href="/">Home</a>
@@ -33,6 +35,7 @@
       </ul>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="/scripts/darkmode.js" async defer></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

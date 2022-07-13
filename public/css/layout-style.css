@@ -1,3 +1,12 @@
+/* dark mode support */
+:root[color-mode="light"] {
+  --bgcolor: honeydew;
+}
+
+:root[color-mode="dark"] {
+  --bgcolor: slategrey;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -5,7 +14,7 @@ html {
 body {
   padding: 2%;
   
-  background: aliceblue;
+  background: var(--bgcolor);
 }
 
 h1 {
