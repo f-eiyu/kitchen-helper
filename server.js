@@ -3,9 +3,12 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const kitchenRoutes = require("./controllers/kitchen_routes.js");
 const shopListRoutes = require("./controllers/shoplist_routes.js");
+const userRoutes = require("./controllers/user_routes.js");
 
 const app = require("liquid-express-views")(express());
 
@@ -15,10 +18,21 @@ app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    store: MongoStore.create({
+      mongoUrl: process.env.DATABASE_URI
+    }),
+    saveUninitialized: true,
+    resave: false
+  })
+);
 
 // ========== Routes ==========
 app.use("/kitchen", kitchenRoutes);
 app.use("/shoplist", shopListRoutes);
+app.use("/account", userRoutes);
 
 // temporary routes, to be reorganized later
 app.get("/", (req, res) => {

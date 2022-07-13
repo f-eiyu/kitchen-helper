@@ -1,0 +1,47 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block header %}New Account{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/account/create-account" method="POST">
+    <fieldset>
+      <label class="form-label" for="username">Username</label>
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+      />
+      <div>This is the username you will use to log in.</div>
+
+      <label class="form-label" for="password">Password</label>
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+      />
+      <div>This is the password you will use to log in.</div>
+
+      <label class="form-label" for="prefname">Preferred Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="prefname"
+      />
+      <div>This is what the app will call you.</div>
+    </fieldset>
+
+    <input
+      type="submit"
+      value="Create Account"
+      class="btn btn-success"
+    />
+  </form>
+</div>
+<a href="/">Back</a>
+{% endblock %}

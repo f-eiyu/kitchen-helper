@@ -14,7 +14,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  firstname: {
+  prefname: {
     type: String
   },
   ingredients: {
@@ -28,6 +28,10 @@ const userSchema = new Schema({
   shoppingList: {
     type: [Schema.Types.ObjectId],
     default: []
+  },
+  darkmode: {
+    type: Boolean,
+    default: false
   }
 });
 

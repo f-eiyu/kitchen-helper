@@ -1,0 +1,38 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Log In{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block header %}Log In{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/account/login" method="POST">
+    <fieldset>
+      <legend>Enter your username and password below:</legend>
+      <label class="form-label" for="username">Username</label>
+      <input
+        class="form-control"
+        type="text"
+        name="username"
+      />
+
+      <label class="form-label" for="password">Password</label>
+      <input
+        class="form-control"
+        type="password"
+        name="password"
+      />
+    </fieldset>
+
+    <input
+      type="submit"
+      value="Log In"
+      class="btn btn-success"
+    />
+  </form>
+</div>
+<a href="/">Back</a>
+{% endblock %}
