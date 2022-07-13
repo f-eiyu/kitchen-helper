@@ -1,13 +1,57 @@
 {% layout "layout.liquid" %}
 
-{% block title %}Recipes{% endblock %}
+{% block title %}Recipe Book{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/css/recipes/recipe_nav.css">
+<link rel="stylesheet" href="/css/recipes/index.css">
 {% endblock %}
 
-{% block header %}hello recipes!{% endblock %}
+{% block header %}Recipe Book{% endblock %}
 
 {% block content %}
-hi
+  {% if recipes.size < 1 %}
+    <p>There is nothing in your recipe book :(</p>
+  {% else %}
+    {% for recipe in recipes %}
+      <div class="card">
+        <h3>{{recipe.name}}</h3>
+        <ul>
+          <li>amount: {{ing.amount}}</li>
+          <li>ingredients:
+            <ul>
+              {% for ing in recipe.ingredientList %}
+                <li>{{ing.name}}: {{ing.amount}}</li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li>tags:
+            {% for tag in recipe.tags %}
+              {{tag}}, 
+            {% endfor %}  
+          </li>
+          <li>notes: {{recipe.notes}}</li>
+
+          <li>favorite? {{recipe.favorite}}</li>
+          <li>updated: {{recipe.updatedAt}}</li>
+          <li>id: {{recipe._id}}</li>
+        </ul>
+
+        <a href="/recipes/{{recipe._id}}"><span class="card-link"></span></a>
+
+        <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
+          <input
+            type="submit"
+            value="Delete"
+          />
+        </form>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form action="/kitchen/new" class="new-item-button">
+    <input
+      type="submit"
+      value="+"
+    />
+  </form>
 {% endblock %}

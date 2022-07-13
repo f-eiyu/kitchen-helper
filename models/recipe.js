@@ -10,7 +10,7 @@ const recipeSchema = new Schema({
     required: true
   },
   ingredientList: {
-    type: [{String: Number}],
+    type: [{"name": String, "amount": Number}],
      required: true
   },
   instructions: {
@@ -29,6 +29,8 @@ const recipeSchema = new Schema({
     type: [String],
     default: []
   }
+}, {
+  timestamps: true
 });
 
 const Recipe = model("Recipe", recipeSchema);

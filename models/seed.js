@@ -52,17 +52,20 @@ const seed = {
     const recipeSeed = [
       {
         name: "Cinnamon Challenge",
-        ingredientList: [{"cinnamon": 20}, {"water": 250}],
+        ingredientList: [
+          {name: "cinnamon", amount: 20},
+          {name: "water", amount: 250}
+        ],
         instructions: "Put all the cinnamon in your mouth and swallow. Drink water if necessary.",
         tags: ["1/10 would not cinnamon again", "social media is awful"]
       },
       {
         name: "Seed Smoothie",
         ingredientList: [
-          {"apple": 1},
-          {"banana": 1},
-          {"coconut milk": 50},
-          {"cottage cheese": 0.1}
+          {name: "apple", amount: 1},
+          {name: "banana", amount: 1},
+          {name: "coconut milk", amount: 50},
+          {name: "cottage cheese", amount: 0.1}
         ],
         instructions: "Put all ingredients in a blender and mix. Serve chilled. Regret life choices.",
         tags: ["making seed data is too much responsibility for me", "why did i do this"],

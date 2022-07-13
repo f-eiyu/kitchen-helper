@@ -1,0 +1,29 @@
+div.card {
+  width: 30rem;
+  max-width: 90vw;
+
+  margin: 20px auto;
+  padding: 0;
+
+  box-shadow: 2px 2px 8px #333;
+}
+
+div.card > h3 {
+  margin: 12px auto auto 12px;
+}
+
+a > span.card-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
+  z-index: 1;
+}
+
+/* temp */
+form {
+  z-index: 2;
+}
