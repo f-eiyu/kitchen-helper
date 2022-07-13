@@ -11,4 +11,8 @@
 {% block content %}
 <p><a href="/account/login">login</a></p>
 <p><a href="/account/create-account">sign up</a></p>
+<form action="/account/toggle-darkmode" method="POST">
+  {{darkmode}}
+  <input type="submit" value="toggle darkmode">
+</form>
 {% endblock %}

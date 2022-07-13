@@ -57,5 +57,15 @@ router.post("/login", (req, res) => {
     })
 });
 
+// Darkmode toggle
+router.post("/toggle-darkmode", (req, res) => {
+  User.findById(req.session.userId)
+    .then(user => {
+      user.darkmode = !user.darkmode;
+      user.save();
+    })
+    .finally(res.redirect("/"));
+});
+
 // ========== Exports ==========
 module.exports = router;
