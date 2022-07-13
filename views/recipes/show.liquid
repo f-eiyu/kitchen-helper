@@ -1,0 +1,37 @@
+{% layout "layout.liquid" %}
+
+{% block title %}{{recipe.name}}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/recipes/recipe_nav.css">
+{% endblock %}
+
+{% block header %}{{recipe.name}}{% endblock %}
+
+{% block content %}
+<div class="card">
+  {{recipe.name}}
+  <ul>
+    <li>amount: {{ing.amount}}</li>
+    <li>ingredients:
+      <ul>
+        {% for ing in recipe.ingredientList %}
+          <li>{{ing.name}}: {{ing.amount}}</li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li>tags:
+      {% for tag in recipe.tags %}
+        {{tag}}, 
+      {% endfor %}  
+    </li>
+    <li>notes: {{recipe.notes}}</li>
+
+    <li>favorite? {{recipe.favorite}}</li>
+    <li>updated: {{recipe.updatedAt}}</li>
+    <li>id: {{recipe._id}}</li>
+  </ul>
+  <a href="/recipe/{{recipe._id}}/edit">Edit Recipe</a>
+</div>
+<a href="/recipes">Back</a>
+{% endblock %}
