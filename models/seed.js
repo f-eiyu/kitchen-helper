@@ -2,19 +2,20 @@
 const mongoose = require("./connection.js");
 const Ingredient = require("./ingredient.js");
 const ShopListItem = require("./listitem.js");
+const Recipe = require("./recipe.js");
 
 // ========== Seed data ==========
-const db = mongoose.connection;
+// const db = mongoose.connection;
 const seed = {
   seedIngredients() {
     const ingredientSeed = [
       {
-        name: "Apples",
+        name: "Apple",
         amount: 5,
         tags: ["mediocre", "red"],
         favorite: false
       }, {
-        name: "Bananas",
+        name: "Banana",
         amount: 12,
         tags: ["only good when green"],
         favorite: false
@@ -43,12 +44,45 @@ const seed = {
           .catch(err => {
             console.log("Error seeding ingredients:", err);
             // db.close();
-          })
+          });
       });
   },
 
   seedRecipes() {
-    console.log("This functionality is not yet implemented.");
+    const recipeSeed = [
+      {
+        name: "Cinnamon Challenge",
+        ingredientList: [{"cinnamon": 20}, {"water": 250}],
+        instructions: "Put all the cinnamon in your mouth and swallow. Drink water if necessary.",
+        tags: ["1/10 would not cinnamon again", "social media is awful"]
+      },
+      {
+        name: "Seed Smoothie",
+        ingredientList: [
+          {"apple": 1},
+          {"banana": 1},
+          {"coconut milk": 50},
+          {"cottage cheese": 0.1}
+        ],
+        instructions: "Put all ingredients in a blender and mix. Serve chilled. Regret life choices.",
+        tags: ["making seed data is too much responsibility for me", "why did i do this"],
+        favorite: true
+      }
+    ];
+
+    Recipe.deleteMany({})
+      .then(deleted => {
+        console.log("Dropped previous entries:", deleted);
+        Recipe.create(recipeSeed)
+          .then(recipe => {
+            console.log(recipe);
+            // db.close();
+          })
+          .catch(err => {
+            console.log("Error seeding recipes:", err);
+            // db.close();
+          });
+      });
   },
 
   seedShoppingList() {
@@ -80,7 +114,7 @@ const seed = {
           .catch(err => {
             console.log("Error seeding shopping list:", err);
             // db.close();
-          })
+          });
       });
   },
 

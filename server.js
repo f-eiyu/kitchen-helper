@@ -8,6 +8,7 @@ const MongoStore = require("connect-mongo");
 const checkDarkMode = require("./middleware/darkmode.js");
 
 const kitchenRoutes = require("./controllers/kitchen_routes.js");
+const recipeRoutes = require("./controllers/recipe_routes.js");
 const shopListRoutes = require("./controllers/shoplist_routes.js");
 const userRoutes = require("./controllers/user_routes.js");
 
@@ -15,7 +16,7 @@ const app = require("liquid-express-views")(express());
 
 // ========== Middleware ==========
 
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
@@ -35,6 +36,7 @@ app.use(checkDarkMode);
 
 // ========== Routes ==========
 app.use("/kitchen", kitchenRoutes);
+app.use("/recipes", recipeRoutes);
 app.use("/shoplist", shopListRoutes);
 app.use("/account", userRoutes);
 
@@ -53,14 +55,26 @@ app.get("/seed/ingredients", (req, res) => {
   res.send("seeded ingredients db<br /><br /><a href='/'>home</a>");
 });
 
+app.get("/seed/recipes", (req, res) => {
+  seed.seedRecipes();
+  res.send("seeded recipes db<br /><br /><a href='/'>home</a>")
+});
+
 app.get("/seed/shoplist", (req, res) => {
   seed.seedShoppingList();
   res.send("seeded shopping list db<br /><br /><a href='/'>home</a>");
 });
 
-// app.get("*", (req, res) => {
-//   res.redirect("/");
-// });
+app.get("/seed", (req, res) => {
+  seed.seedAll();
+  res.send("all dbs seeded<br /><br /><a href='/'>home</a>");
+});
+
+app.get("*", (req, res) => {
+  const { originalUrl } = req;
+  console.log(originalUrl, "not found. Redirecting to home.");
+  res.redirect("/");
+});
 
 // ========== Start server ==========
 const PORT = process.env.PORT;
