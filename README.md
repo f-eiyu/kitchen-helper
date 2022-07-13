@@ -127,9 +127,9 @@ All of the functionalities of this app can be enhanced with data from the other 
 | ✅ New       | /shoplist/new     | GET   | Displays form to add an item to the Shopping List |
 | ✅ Create    | /shoplist         | POST  | Adds a new item to the Shopping List |
 | ~~Show~~      | ~~/shoplist/:id~~     | ~~GET~~   | ~~Shows information on one Shopping List item~~ |
-| Edit      | /shoplist/:id/edit| GET   | Displays form to edit information of one Shopping List item |
-| Update    | /shoplist/:id      | PUT   | Updates information of one Shopping List item|
-| Destroy   | /shoplist/:id      | DELETE| Deletes one Shopping List item completely |
+| ✅ Edit      | /shoplist/:id/edit| GET   | Displays form to edit information of one Shopping List item |
+| ✅ Update    | /shoplist/:id      | PUT   | Updates information of one Shopping List item|
+| ✅ Destroy   | /shoplist/:id      | DELETE| Deletes one Shopping List item completely |
 
 ## Wireframes
 ![Wireframes 1](./planning/Wireframe1.jpg)
