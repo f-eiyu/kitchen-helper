@@ -52,10 +52,6 @@ input.center-button {
   border-left: solid white 1px;
 }
 
-#global-nav-kitchen {
-  background-color: #333;
-}
-
 #new-ingredient-button {
   display: flex;
   position: fixed;

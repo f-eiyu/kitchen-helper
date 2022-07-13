@@ -38,6 +38,11 @@ app.get("/seed/ingredients", (req, res) => {
   res.send("seeded ingredients db<br /><br /><a href='/'>home</a>");
 });
 
+app.get("/seed/shoplist", (req, res) => {
+  seed.seedShoppingList();
+  res.send("seeded shopping list db<br /><br /><a href='/'>home</a>");
+});
+
 // app.get("*", (req, res) => {
 //   res.redirect("/");
 // });
