@@ -12,7 +12,6 @@
 <div class="card">
   {{recipe.name}}
   <ul>
-    <li>amount: {{ing.amount}}</li>
     <li>ingredients:
       <ul>
         {% for ing in recipe.ingredientList %}
@@ -20,18 +19,22 @@
         {% endfor %}
       </ul>
     </li>
+    <li>instructions: {{recipe.instructions}}</li>
     <li>tags:
       {% for tag in recipe.tags %}
         {{tag}}, 
       {% endfor %}  
     </li>
-    <li>notes: {{recipe.notes}}</li>
+    <li>notes: 
+      {% for note in recipe.notes %}
+        {{note}},
+      {% endfor %}</li>
 
     <li>favorite? {{recipe.favorite}}</li>
     <li>updated: {{recipe.updatedAt}}</li>
     <li>id: {{recipe._id}}</li>
   </ul>
-  <a href="/recipe/{{recipe._id}}/edit">Edit Recipe</a>
+  <a href="/recipes/{{recipe._id}}/edit">Edit Recipe</a>
 </div>
 <a href="/recipes">Back</a>
 {% endblock %}

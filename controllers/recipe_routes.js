@@ -3,6 +3,39 @@ const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipe.js");
 
+// ========== Utilities ==========
+const parseRecipeInput = (toParse) => {
+
+  const ingredientList = [];
+  toParse.ingredients.forEach((ing, i) => {
+    ingredientList.push({
+      name: ing,
+      amount: toParse.amounts[i]
+    });
+  });
+
+  const favorite = (toParse.favorite === "on");
+
+  let tags;
+  if (toParse.tags.length) {
+    tags = toParse.tags.split(",").map(tag => tag.trim());
+  } else { tags = []; }
+
+  let notes;
+  if (toParse.notes.length) {
+    notes = toParse.notes.split(",").map(note => note.trim());
+  } else { notes = []; }
+
+  return {
+    name: toParse.name,
+    ingredientList,
+    instructions: toParse.instructions,
+    favorite,
+    tags,
+    notes
+  };
+}
+
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
@@ -21,36 +54,7 @@ router.get("/new", (req, res) => {
 
 // Create
 router.post("/", (req, res) => {
-  const submittedRecipe = req.body;
-
-  const ingredientList = [];
-  submittedRecipe.ingredients.forEach((ing, i) => {
-    ingredientList.push({
-      name: ing,
-      amount: submittedRecipe.amounts[i]
-    });
-  });
-
-  const favorite = (submittedRecipe.favorite === "on");
-
-  let tags;
-  if (submittedRecipe.tags.length) {
-    tags = submittedRecipe.tags.split(",").map(tag => tag.trim());
-  } else { tags = []; }
-
-  let notes;
-  if (submittedRecipe.notes.length) {
-    notes = submittedRecipe.notes.split(",").map(note => note.trim());
-  } else { notes = []; }
-
-  const newRecipe = {
-    name: submittedRecipe.name,
-    ingredientList,
-    instructions: submittedRecipe.instructions,
-    favorite,
-    tags,
-    notes
-  };
+  const newRecipe = parseRecipeInput(req.body);
 
   Recipe.create(newRecipe)
     .then(recipe => {
@@ -69,13 +73,39 @@ router.get("/:recipeId", (req, res) => {
     .then(recipe => res.render("./recipes/show.liquid", { recipe }))
     .catch(err => {
       console.error(err);
-      res.send(`Error in /recipes/${req.params.recipeID} SHOW -- check the terminal.`);
+      res.send(`Error in /recipes/${req.params.recipeId} SHOW -- check the terminal.`);
     });
 });
 
 // Edit
+router.get("/:recipeId/edit", (req, res) => {
+  Recipe.findById(req.params.recipeId)
+    .then(recipe => {
+      const tagStr = recipe.tags.join(", ");
+      const noteStr = recipe.notes.join(", ");
+      res.render("./recipes/edit.liquid", { recipe, tagStr, noteStr });
+    })
+    .catch(err => {
+      console.error(err);
+      res.send(`Error in /recipes/${req.params.recipeId} EDIT -- check the terminal.`);
+    });
+});
 
 // Update
+router.put("/:recipeId", (req, res) => {
+  const updatedRecipe = parseRecipeInput(req.body);
+
+  Recipe.findByIdAndUpdate(req.params.recipeId, updatedRecipe,
+    {
+      new: true,
+      runValidators: true
+    })
+    .then(recipe => res.redirect(`/recipes/${req.params.recipeId}`))
+    .catch(err => {
+      console.error(err);
+      res.send(`Error in /recipes/${req.params.recipeId} UPDATE -- check the terminal.`);
+    });
+});
 
 // Delete
 router.delete("/:recipeId", (req, res) => {
