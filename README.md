@@ -107,13 +107,13 @@ All of the functionalities of this app can be enhanced with data from the other 
 ## Route Table
 | Name      | Path              | HTTP  | Description |
 | ----      | ----              | ----  | ----------- |
-| Index     | /kitchen          | GET   | Displays all ingredients in My Kitchen |
-| New       | /kitchen/new      | GET   | Displays form to add an ingredient to My Kitchen |
-| Create    | /kitchen          | POST  | Adds a new ingredient to My Kitchen |
-| Show      | /kitchen/:id      | GET   | Shows information on one specific ingredient |
-| Edit      | /kitchen/:id/edit | GET   | Displays form to edit information of one ingredient |
-| Update    | /kitchen/:id      | PUT   | Updates information of one ingredient |
-| Destroy   | /kitchen/:id      | DELETE| Deletes one ingredient completely |
+| ✅ Index     | /kitchen          | GET   | Displays all ingredients in My Kitchen |
+| ✅ New       | /kitchen/new      | GET   | Displays form to add an ingredient to My Kitchen |
+| ✅ Create    | /kitchen          | POST  | Adds a new ingredient to My Kitchen |
+| ✅ Show      | /kitchen/:id      | GET   | Shows information on one specific ingredient |
+| ✅ Edit      | /kitchen/:id/edit | GET   | Displays form to edit information of one ingredient |
+| ✅ Update    | /kitchen/:id      | PUT   | Updates information of one ingredient |
+| ✅ Destroy   | /kitchen/:id      | DELETE| Deletes one ingredient completely |
 | &nbsp;| | | |
 | Index     | /recipes          | GET   | Displays all recipes in the Recipe Assistant |
 | New       | /recipes/new      | GET   | Displays form to add a recipe to the Recipe Assistant |
@@ -123,10 +123,10 @@ All of the functionalities of this app can be enhanced with data from the other 
 | Update    | /recipes/:id      | PUT   | Updates information of one recipe |
 | Destroy   | /recipes/:id      | DELETE| Deletes one recipe completely |
 | &nbsp;| | | |
-| Index     | /shoplist         | GET   | Displays the Shopping List |
-| New       | /shoplist/new     | GET   | Displays form to add an item to the Shopping List |
-| Create    | /shoplist         | POST  | Adds a new item to the Shopping List |
-| Show      | /shoplist/:id     | GET   | Shows information on one Shopping List item |
+| ✅ Index     | /shoplist         | GET   | Displays the Shopping List |
+| ✅ New       | /shoplist/new     | GET   | Displays form to add an item to the Shopping List |
+| ✅ Create    | /shoplist         | POST  | Adds a new item to the Shopping List |
+| ~~Show~~      | ~~/shoplist/:id~~     | ~~GET~~   | ~~Shows information on one Shopping List item~~ |
 | Edit      | /shoplist/:id/edit| GET   | Displays form to edit information of one Shopping List item |
 | Update    | /shoplist/:id      | PUT   | Updates information of one Shopping List item|
 | Destroy   | /shoplist/:id      | DELETE| Deletes one Shopping List item completely |

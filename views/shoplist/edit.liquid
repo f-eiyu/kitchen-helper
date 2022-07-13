@@ -1,0 +1,43 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Editing Item{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/kitchen/kitchen_nav.css">
+{% endblock %}
+
+{% block header %}Editing {{iitem.name}}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/shoplist/{{item._id}}?_method=PUT" method="POST">
+    <fieldset>
+      <legend>Editing {{item.name}}</legend>
+
+      <label class="form-label" for="name">Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        value="{{item.name}}"
+      />
+
+      <label class="form-label" for="amount">Amount</label>
+      <input
+        class="form-control"
+        type="text"
+        inputmode="numeric"
+        name="amount"
+        value="{{item.amount}}"
+      />
+    </fieldset>
+
+    <input
+    type="submit"
+    value="Edit Item"
+    class="btn btn-success"
+  />
+  </form>
+</div>
+<a href="/shoplist">Back</a>
+{% endblock %}

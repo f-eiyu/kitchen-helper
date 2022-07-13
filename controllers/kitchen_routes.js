@@ -34,7 +34,7 @@ router.post("/", (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.send(`Error in /kitchen/${req.params.ingId} CREATE -- check the terminal.`);
+      res.send(`Error in /kitchen CREATE -- check the terminal.`);
     });
 });
 
@@ -53,7 +53,6 @@ router.get("/:ingId/edit", (req, res) => {
   Ingredient.findById(req.params.ingId)
     .then(ing => {
       const tagStr = ing.tags.join(", ");
-      console.log(tagStr, ing.tags);
       res.render("./kitchen/edit.liquid", { ing, tagStr });
     })
     .catch(err => {
@@ -75,10 +74,7 @@ router.put("/:id", (req, res) => {
       new: true,
       runValidators: true
     })
-    .then(ing => {
-      console.log(req.params.id, `./kitchen/${req.params.id}`);
-      res.redirect(`/kitchen/${req.params.id}`);
-    })
+    .then(ing => res.redirect(`/kitchen/${req.params.id}`))
     .catch(err => {
       console.error(err);
       res.send(`Error in /kitchen/${req.params.ingId} EDIT -- check the terminal.`);

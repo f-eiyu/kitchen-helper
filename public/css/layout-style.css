@@ -19,3 +19,35 @@ h1 {
 
   background-color: black;
 }
+
+form.new-item-button {
+  display: flex;
+  position: fixed;
+  bottom: 10vh;
+  right: 6vw;
+
+  height: 20vh;
+  width: 20vh;
+  max-height: 50px;
+  max-width: 50px;
+
+  border: solid 1px black;
+  border-radius: 100%;
+
+  background-color: lightgreen;
+  box-shadow: 2px 2px 5px black;
+
+  font-size: 3em;
+}
+
+form.new-item-button > input {
+  height: inherit;
+  width: inherit;
+  border: none;
+  border-radius: inherit;
+  justify-self: center;
+  align-self: center;
+
+  background: none;
+  border: none;
+}

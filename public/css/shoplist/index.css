@@ -1,0 +1,19 @@
+div.card {
+  padding: 1em 0.5em;
+  max-width: 40vw;
+  margin: 0 auto;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+label.list-item-checked {
+  color: #888;
+  text-decoration: line-through;
+}
+
+/* temp */
+input, form {
+  display: inline;
+}

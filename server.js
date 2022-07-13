@@ -5,19 +5,20 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');
 
 const kitchenRoutes = require("./controllers/kitchen_routes.js");
+const shopListRoutes = require("./controllers/shoplist_routes.js");
 
 const app = require("liquid-express-views")(express());
 
 // ========== Middleware ==========
 
-app.use(morgan('tiny'))
-app.use(methodOverride('_method'))
-app.use(express.urlencoded({ extended: false }))
-// to serve files from public statically
-app.use(express.static('public'))
+app.use(morgan('tiny'));
+app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 // ========== Routes ==========
 app.use("/kitchen", kitchenRoutes);
+app.use("/shoplist", shopListRoutes);
 
 // temporary routes, to be reorganized later
 app.get("/", (req, res) => {
@@ -26,10 +27,6 @@ app.get("/", (req, res) => {
 
 app.get("/recipes", (req, res) => {
   res.render("./recipes/index.liquid");
-});
-
-app.get("/shopping-list", (req, res) => {
-  res.render("./shopping-list/index.liquid");
 });
 
 const seed = require("./models/seed.js");
