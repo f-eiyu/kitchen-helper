@@ -5,7 +5,9 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+
 const checkDarkMode = require("./middleware/darkmode.js");
+const checkLoggedIn = require("./middleware/loggedin.js");
 
 const kitchenRoutes = require("./controllers/kitchen_routes.js");
 const recipeRoutes = require("./controllers/recipe_routes.js");
@@ -31,8 +33,9 @@ app.use(
   })
 );
 
-// custom middleware for dark mode
+// custom middleware
 app.use(checkDarkMode);
+app.use(checkLoggedIn);
 
 // ========== Routes ==========
 app.use("/kitchen", kitchenRoutes);

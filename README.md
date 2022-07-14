@@ -116,11 +116,11 @@ All of the functionalities of this app can be enhanced with data from the other 
 | ✅ Destroy   | /kitchen/:id      | DELETE| Deletes one ingredient completely |
 | &nbsp;| | | |
 | ✅ Index     | /recipes          | GET   | Displays all recipes in the Recipe Assistant |
-| New       | /recipes/new      | GET   | Displays form to add a recipe to the Recipe Assistant |
-| Create    | /recipes          | POST  | Adds a new recipe to the Recipe Assistant |
-| Show      | /recipes/:id      | GET   | Shows information on one specific recipe |
-| Edit      | /recipes/:id/edit | GET   | Displays form to edit information of one recipe |
-| Update    | /recipes/:id      | PUT   | Updates information of one recipe |
+| ✅ New       | /recipes/new      | GET   | Displays form to add a recipe to the Recipe Assistant |
+| ✅ Create    | /recipes          | POST  | Adds a new recipe to the Recipe Assistant |
+| ✅ Show      | /recipes/:id      | GET   | Shows information on one specific recipe |
+| ✅ Edit      | /recipes/:id/edit | GET   | Displays form to edit information of one recipe |
+| ✅ Update    | /recipes/:id      | PUT   | Updates information of one recipe |
 | ✅ Destroy   | /recipes/:id      | DELETE| Deletes one recipe completely |
 | &nbsp;| | | |
 | ✅ Index     | /shoplist         | GET   | Displays the Shopping List |

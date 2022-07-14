@@ -57,6 +57,15 @@ router.post("/login", (req, res) => {
     })
 });
 
+// Log out
+router.get("/logout", (req, res) => {
+  console.log(req.session);
+  req.session.destroy(sess => {
+    
+    res.redirect("/");
+  });
+});
+
 // Darkmode toggle
 router.post("/toggle-darkmode", (req, res) => {
   User.findById(req.session.userId)

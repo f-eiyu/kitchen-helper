@@ -9,10 +9,21 @@
 {% block header %}hello app!{% endblock %}
 
 {% block content %}
-<p><a href="/account/login">login</a></p>
-<p><a href="/account/create-account">sign up</a></p>
-<form action="/account/toggle-darkmode" method="POST">
-  {{darkmode}}
-  <input type="submit" value="toggle darkmode">
-</form>
+{% if loggedIn %}
+  <div class="card">
+    <p><a href="/kitchen">kitchen</a></p>
+    <p><a href="/recipes">recipes</a></p>
+    <p><a href="/shoplist">shopping list</a></p>
+    <p><a href="/account/logout">logout</a></p>
+    <form action="/account/toggle-darkmode" method="POST">
+      <input type="submit" value="toggle darkmode">
+    </form>
+  </div>
+{% else %}
+  <div class="card">
+    <p>Please log in or create an account to use the app!</p>
+    <p><a href="/account/login">login</a></p>
+    <p><a href="/account/create-account">sign up</a></p>
+  </div>
+{% endif %}
 {% endblock %}
