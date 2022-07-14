@@ -50,11 +50,13 @@
             </form>
           </li>
           <li class="nav-item">
-            <form action="/">
+            <form action="javascript:void(0);">
               <input
                 type="submit"
-                value="Replenish"
-                class="ingredient-nav-button"
+                value="Buy More"
+                class="ingredient-nav-button buy-more-button"
+                id="buy-more-{{ing.name}}"
+                target="/shoplist/transfer-ingredient"
               />
             </form>
           </li>
@@ -69,4 +71,8 @@
       value="+"
     />
   </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="/scripts/kitchen/buymore.js" async defer></script>
 {% endblock %}

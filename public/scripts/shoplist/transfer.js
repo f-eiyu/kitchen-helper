@@ -1,4 +1,5 @@
 const transferEvent = async (event) => {
+  console.log("event");
   const transferButton = event.target;
   const boxLabelList = document.querySelectorAll(".checkbox-label");
   const checkedIds = [];
@@ -29,7 +30,7 @@ const transferEvent = async (event) => {
     },
     body: JSON.stringify({ checkedIds }),
     redirect: "follow"
-  }
+  };
   const response = await fetch(targetUrl, fetchInit);
 
   // reload the page
@@ -37,5 +38,5 @@ const transferEvent = async (event) => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("transfer").addEventListener("click", transferEvent);
+  document.getElementById("transfer")?.addEventListener("click", transferEvent);
 });
