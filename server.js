@@ -54,22 +54,22 @@ app.get("/recipes", (req, res) => {
 
 const seed = require("./models/seed.js");
 app.get("/seed/ingredients", (req, res) => {
-  seed.seedIngredients();
+  seed.seedIngredients(req, res);
   res.send("seeded ingredients db<br /><br /><a href='/'>home</a>");
 });
 
 app.get("/seed/recipes", (req, res) => {
-  seed.seedRecipes();
+  seed.seedRecipes(req, res);
   res.send("seeded recipes db<br /><br /><a href='/'>home</a>")
 });
 
 app.get("/seed/shoplist", (req, res) => {
-  seed.seedShoppingList();
+  seed.seedShoppingList(req, res);
   res.send("seeded shopping list db<br /><br /><a href='/'>home</a>");
 });
 
 app.get("/seed", (req, res) => {
-  seed.seedAll();
+  seed.seedAll(req, res);
   res.send("all dbs seeded<br /><br /><a href='/'>home</a>");
 });
 
