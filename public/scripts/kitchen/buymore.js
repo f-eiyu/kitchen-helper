@@ -3,10 +3,11 @@ const buyMore = async (event) => {
   const ingName = buyMoreButton.id.split("-")[2];
 
   const buyAmount = prompt(`Buy how much more ${ingName}?`);
-  if (isNaN(buyAmount)) {
+  if (isNaN(buyAmount) || buyAmount === "") {
     alert("You did not enter a valid number.");
     return;
   }
+  else if (buyAmount === null) { return; }
 
   const newItem = {
     name: ingName,
@@ -28,9 +29,6 @@ const buyMore = async (event) => {
    alert("Shopping list updated!");
 }
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".buy-more-button").forEach(button => {
-    if (button) { button.addEventListener("click", buyMore); }
-  })
-});
+document.querySelectorAll(".buy-more-button").forEach(button => {
+  if (button) { button.addEventListener("click", buyMore); }
+})

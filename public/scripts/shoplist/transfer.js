@@ -1,5 +1,4 @@
 const transferEvent = async (event) => {
-  console.log("event");
   const transferButton = event.target;
   const boxLabelList = document.querySelectorAll(".checkbox-label");
   const checkedIds = [];
@@ -37,6 +36,4 @@ const transferEvent = async (event) => {
   window.location.href = response.url;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("transfer")?.addEventListener("click", transferEvent);
-});
+document.getElementById("transfer")?.addEventListener("click", transferEvent);
