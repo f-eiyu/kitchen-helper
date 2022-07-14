@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="/css/home/home_nav.css">
 {% endblock %}
 
-{% block header %}hello app!{% endblock %}
+{% block header %}Welcome, {{prefname}}!{% endblock %}
 
 {% block content %}
 {% if loggedIn %}
@@ -14,6 +14,7 @@
     <p><a href="/kitchen">kitchen</a></p>
     <p><a href="/recipes">recipes</a></p>
     <p><a href="/shoplist">shopping list</a></p>
+    <p><a href="/account/settings">settings</a></p>
     <p><a href="/account/logout">logout</a></p>
     <form action="/account/toggle-darkmode" method="POST">
       <input type="submit" value="toggle darkmode">

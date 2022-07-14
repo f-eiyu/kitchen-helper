@@ -1,0 +1,50 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/home/home_nav.css">
+{% endblock %}
+
+{% block header %}Settings{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/account/save-settings?_method=PUT" method="POST">
+    <fieldset>
+      <label class="form-label" for="prefname">Preferred Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="prefname"
+        value="{{userinfo.prefname}}"
+      />
+
+      <label class="form-label" for="darkmode">Dark Mode?</label>
+      <input
+        type="radio"
+        name="darkmode"
+        id="darkmode-yes"
+        value="on"
+        {% if userinfo.darkmode %} checked {% endif %}
+      />
+      <label for="darkode-yes">Yes</label>
+      <input
+        type="radio"
+        name="darkmode"
+        id="darkmode-no"
+        value="off"
+        {% if userinfo.darkmode == false %} checked {% endif %}
+      />
+      <label for="darkmode-no">No</label>
+    </fieldset>
+
+    <input
+      type="submit"
+      value="Save Settings"
+      class="btn btn-success"
+    />
+  </form>
+</div>
+<a href="/">Back</a>
+{% endblock %}

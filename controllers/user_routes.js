@@ -1,9 +1,8 @@
 // ========== Imports ==========
 const express = require("express");
-const User = require("../models/user.js");
-const bcrypt = require("bcryptjs");
-
 const router = express.Router();
+const bcrypt = require("bcryptjs");
+const User = require("../models/user.js");
 
 // ========== Routes ==========
 // New
@@ -21,7 +20,10 @@ router.post("/create-account", async (req, res) => {
 
   // create user
   User.create(req.body)
-    .then(user => res.redirect("/account/login"))
+    .then(user => {
+      console.log(`Creating user "${user.username}" (${user._id}) at ${new Date()}.`);
+      res.redirect("/account/login");
+    })
     .catch(err => {
       console.error(err);
       res.send(`Error creating user "${req.body.username}" -- check the terminal.`);
@@ -49,7 +51,8 @@ router.post("/login", (req, res) => {
         req.session.username = username;
         req.session.loggedIn = true;
         req.session.userId = user._id;
-        console.log(req.session);
+        console.log(`Starting session for user "${username}" at ${new Date()}."`);
+
         res.redirect("/");
       } else {
         res.send("Username or password incorrect.");
@@ -57,11 +60,44 @@ router.post("/login", (req, res) => {
     })
 });
 
+// Settings
+router.get("/settings", (req, res) => {
+  User.findById(req.session.userId)
+    .then(user => {
+      const userinfo = [];
+      userinfo.prefname = user.prefname;
+      userinfo.darkmode = user.darkmode;
+      res.render("./account/settings.liquid", { userinfo });
+    })
+    .catch(err => {
+      console.error(err);
+      res.send("Error loading user settings -- check terminal.");
+    });
+})
+
+// Save settings
+router.put("/save-settings", (req, res) => {
+  const newPrefs = req.body;
+  newPrefs.darkmode = (req.body.darkmode === "on");
+  
+  User.findById(req.session.userId)
+    .then(user => {
+      user.prefname = newPrefs.prefname;
+      user.darkmode = newPrefs.darkmode;
+      user.save();
+
+      res.redirect("/");
+    })
+    .catch(err => {
+      console.error(err);
+      res.send("Error saving user settings -- check terminal.");
+    });
+});
+
 // Log out
 router.get("/logout", (req, res) => {
-  console.log(req.session);
+  console.log(`Ending session for user "${req.session.username}" at ${new Date()}.`);
   req.session.destroy(sess => {
-    
     res.redirect("/");
   });
 });

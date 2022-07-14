@@ -9,6 +9,8 @@ const MongoStore = require("connect-mongo");
 const checkDarkMode = require("./middleware/darkmode.js");
 const checkLoggedIn = require("./middleware/loggedin.js");
 
+const User = require("./models/user.js");
+
 const kitchenRoutes = require("./controllers/kitchen_routes.js");
 const recipeRoutes = require("./controllers/recipe_routes.js");
 const shopListRoutes = require("./controllers/shoplist_routes.js");
@@ -45,7 +47,10 @@ app.use("/account", userRoutes);
 
 // temporary routes, to be reorganized later
 app.get("/", (req, res) => {
-  res.render("./home/index.liquid");
+  User.findById(req.session.userId)
+  .then(user => {
+    res.render("./home/index.liquid", { prefname: user.prefname });
+  });
 });
 
 app.get("/recipes", (req, res) => {
