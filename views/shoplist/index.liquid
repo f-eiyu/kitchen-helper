@@ -14,15 +14,27 @@
     {% if shoplist.size < 1 %}
       <p>There is nothing in your shopping list :(</p>
     {% else %}
+      <button
+        id="transfer"
+        target="/shoplist/transfer"
+      >
+        Transfer to Kitchen
+      </button>
       {% for item in shoplist %}
-        <label class="checkbox-label" id="label-{{forloop.index0}}">
+        <label class="checkbox-label" id="label-{{item._id}}">
           <form action="/shoplist?_method=PUT" method="POST">
             <input
               type="checkbox"
-              id="item-{{forloop.index0}}"
-              {% if item.checked %} checked {% endif %}
+              id="checkbox-{{item._id}}"
+              {% if item.checked %} checked="on" {% endif %}
               onChange="this.form.submit()"
             />
+            <span>
+              {{item.name}}
+              {% if item.amount != 0 %}
+                ({{item.amount}})
+              {% endif %}
+            </span>
             <!-- by default, html does not send data when the checkbox is
                   empty; this will override that behavior and correctly report
                   the checkbox status regardless -->
@@ -35,22 +47,15 @@
                 value="on"
               {% endif %}
             />
-            <span>
-              {{item.name}}
-              {% if item.amount != 0 %}
-                ({{item.amount}})
-              {% endif %}
-            </span>
-          </form>
-
-          <form action="/shoplist/{{item._id}}/edit" method="GET">
-            <input type="submit" value="Edit" />
-          </form>
-
-          <form action="/shoplist/{{item._id}}?_method=DELETE" method="POST">
-            <input type="submit" value="Delete" />
           </form>
         </label>
+        <form action="/shoplist/{{item._id}}/edit" method="GET">
+          <input type="submit" value="Edit" />
+        </form>
+
+        <form action="/shoplist/{{item._id}}?_method=DELETE" method="POST">
+          <input type="submit" value="Delete" />
+        </form>
         
       {% endfor %}
     {% endif %}
@@ -65,4 +70,5 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="./scripts/shoplist/transfer.js" async defer></script>
 {% endblock %}

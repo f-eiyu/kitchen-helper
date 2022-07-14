@@ -6,7 +6,7 @@ const User = require("./user.js");
 
 // ========== Seed data ==========
 const seed = {
-  seedIngredients(req, res) {
+  async seedIngredients(req, res) {
     console.log(Ingredient.name);
     const ingredientSeed = [
       {
@@ -38,16 +38,16 @@ const seed = {
     ];
 
     // purge all ingredients associated with the current user
-    Ingredient.deleteMany({owner: req.session.userId})
+    await Ingredient.deleteMany({owner: req.session.userId})
       .then(deleted => {
         console.log("Dropped previous entries:", deleted);
       })
       // seed database
-      .then(() => {
-        Ingredient.create(ingredientSeed)
-          .then(ings => {
+      .then(async () => {
+        await Ingredient.create(ingredientSeed)
+          .then(async ings => {
             // purge user's previous ingredients and seed with new ones
-            User.findById(req.session.userId)
+            await User.findById(req.session.userId)
               .then(user => {
                 user.ingredients = new Array(...ings);
                 user.save();
@@ -60,7 +60,7 @@ const seed = {
       });
   },
 
-  seedRecipes(req, res) {
+  async seedRecipes(req, res) {
     const recipeSeed = [
       {
         name: "Cinnamon Challenge",
@@ -88,16 +88,16 @@ const seed = {
     ];
 
     // purge all ingredients associated with the current user
-    Recipe.deleteMany({owner: req.session.userId})
+    await Recipe.deleteMany({owner: req.session.userId})
       .then(deleted => {
         console.log("Dropped previous entries:", deleted);
       })
       // seed database
-      .then(() => {
-        Recipe.create(recipeSeed)
-          .then(recipes => {
+      .then(async () => {
+        await Recipe.create(recipeSeed)
+          .then(async recipes => {
             // purge user's previous ingredients and seed with new ones
-            User.findById(req.session.userId)
+            await User.findById(req.session.userId)
               .then(user => {
                 user.recipes = new Array(...recipes);
                 user.save();
@@ -110,7 +110,7 @@ const seed = {
       });
   },
 
-  seedShoppingList(req, res) {
+  async seedShoppingList(req, res) {
     const shopListSeed = [
       {
         name: "water",
@@ -132,16 +132,16 @@ const seed = {
     ];
 
     // purge all shopping list items associated with the current user
-    ShopListItem.deleteMany({owner: req.session.userId})
+    await ShopListItem.deleteMany({owner: req.session.userId})
       .then(deleted => {
         console.log("Dropped previous entries:", deleted);
       })
       // seed database
-      .then(() => {
-        ShopListItem.create(shopListSeed)
-          .then(items => {
+      .then(async () => {
+        await ShopListItem.create(shopListSeed)
+          .then(async items => {
             // purge user's previous ingredients and seed with new ones
-            User.findById(req.session.userId)
+            await User.findById(req.session.userId)
               .then(user => {
                 user.shoppingList = new Array(...items);
                 user.save();
@@ -154,10 +154,10 @@ const seed = {
       }); // try wrapping in Promise with a .finally(return resolve()) here?
   },
 
-  seedAll(req, res) { // don't use this until i figure out the async issues
-    this.seedIngredients(req, res);
-    this.seedRecipes(req, res);
-    this.seedShoppingList(req, res);
+  async seedAll(req, res) {
+    await this.seedIngredients(req, res);
+    await this.seedRecipes(req, res);
+    await this.seedShoppingList(req, res);
   }
 };
 

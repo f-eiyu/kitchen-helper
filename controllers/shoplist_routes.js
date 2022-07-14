@@ -1,6 +1,8 @@
 // ========== Imports ==========
 const express = require("express");
 const router = express.Router();
+
+const Ingredient = require("../models/ingredient.js");
 const ShopList = require("../models/listitem.js");
 const User = require("../models/user.js");
 
@@ -40,9 +42,6 @@ router.post("/", (req, res) => {
           user.shoppingList.push(item);
           user.save();
           console.log(`Created shopping list item "${item.name}" for user "${user.username}".`)
-
-          console.log(item)
-          console.log(user)
 
           res.redirect("/shoplist");
         })
@@ -96,6 +95,46 @@ router.put("/:itemId", (req, res) => {
       console.error(err);
       res.send(`Error in /shoplist/${itemId} CREATE -- check the terminal.`);
     });
+});
+
+// Transfer shopping list items to kitchen
+router.post("/transfer", (req, res) => {
+  ShopList.find({"_id": {$in: req.body.checkedIds}})
+    .then(async items => {
+      for (let item of items) {
+        // update amount of each ingredient, upserting if necessary
+        const updatedIng = await Ingredient.findOneAndUpdate(
+          {
+            name: item.name,
+            owner: req.session.userId
+          },
+          {
+            name: item.name,
+            $inc: {"amount": item.amount}
+          },
+          {
+            new: true,
+            upsert: true,
+            rawResult: true
+          }
+        );
+
+        // upserting will require properly updating the user's ingredients list
+        if (!updatedIng.lastErrorObject.updatedExisting) {
+          await User.findById(req.session.userId)
+            .then(user => {
+              user.ingredients.push(updatedIng.value._id);
+              user.save();
+            });
+        }
+
+        // remove entry from shopping list
+        await item.delete();
+      }
+    });
+
+
+  res.redirect("/shoplist");
 });
 
 // Delete

@@ -8,11 +8,7 @@ input[type="checkbox"] {
   margin-right: 0.5em;
 }
 
-input[type="checkbox"]+span {
-  color: green;
-}
-
-/* temp */
-input, form {
-  display: inline;
+input:checked + span {
+  color: grey;
+  text-decoration: line-through;
 }

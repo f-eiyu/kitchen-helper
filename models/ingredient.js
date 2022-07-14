@@ -12,7 +12,7 @@ const ingredientSchema = new Schema({
     lowercase: true
   },
   amount: {
-    type: String,
+    type: Number,
     required: true,
     min: 0
   },
