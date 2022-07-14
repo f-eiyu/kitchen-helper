@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const ShopList = require("../models/listitem.js");
+const User = require("../models/user.js");
 
 // ========== Routes ==========
 // the shopping list does not need a SHOW route, because there's little enough
@@ -9,7 +10,7 @@ const ShopList = require("../models/listitem.js");
 
 // Index
 router.get("/", (req, res) => {
-  ShopList.find({})
+  ShopList.find({owner: req.session.userId})
     .then(list => res.render("./shoplist/index.liquid", { shoplist: list }))
     .catch(err => {
       console.error(err);
@@ -24,10 +25,25 @@ router.get("/new", (req, res) => {
 
 // Create
 router.post("/", (req, res) => {
+  req.body.owner = req.session.userId;
+
   ShopList.create(req.body)
     .then(item => {
-      console.log(`Created shopping list item "${item.name}".`);
-      res.redirect("/shoplist");
+      User.findById(req.body.owner)
+        .then(user => {
+          user.shoppingList.push(item);
+          user.save();
+          console.log(`Created shopping list item "${item.name}" for user "${user.username}".`)
+
+          console.log(item)
+          console.log(user)
+
+          res.redirect("/shoplist");
+        })
+        .catch(err => {
+          console.error(err);
+          res.send(`Error in /shoplist CREATE user update -- check the terminal.`);
+        });
     })
     .catch(err => {
       console.error(err);
@@ -47,9 +63,10 @@ router.get("/:itemId/edit", (req, res) => {
     });
 });
 
-// Create
+// Update
 router.put("/:itemId", (req, res) => {
   const { itemId } = req.params;
+
   ShopList.findByIdAndUpdate(itemId, req.body,
     {
       new: true,

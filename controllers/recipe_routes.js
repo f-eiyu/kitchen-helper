@@ -2,9 +2,11 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipe.js");
+const User = require("../models/user.js");
 
 // ========== Utilities ==========
 const parseRecipeInput = (toParse) => {
+  console.log(toParse);
 
   const ingredientList = [];
   toParse.ingredients.forEach((ing, i) => {
@@ -39,7 +41,7 @@ const parseRecipeInput = (toParse) => {
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
-  Recipe.find({})
+  Recipe.find({owner: req.session.userId})
     .then(recipes => res.render("./recipes/index.liquid", { recipes }))
     .catch(err => {
       console.error(err);
@@ -55,11 +57,22 @@ router.get("/new", (req, res) => {
 // Create
 router.post("/", (req, res) => {
   const newRecipe = parseRecipeInput(req.body);
+  newRecipe.owner = req.session.userId;
 
   Recipe.create(newRecipe)
     .then(recipe => {
-      console.log(`Created recipe "${recipe.name}".`)
-      res.redirect("/recipes");
+      User.findById(newRecipe.owner)
+        .then(user => {
+          user.recipes.push(recipe);
+          user.save();
+          console.log(`Created recipe "${recipe.name}" for user "${user.username}."`);
+
+          res.redirect("/recipes");
+        })
+        .catch(err => {
+          console.error(err);
+          res.send(`Error in /recipe CREATE user update -- check the terminal.`);
+        });
     })
     .catch(err => {
       console.error(err);

@@ -18,15 +18,24 @@ const userSchema = new Schema({
     type: String
   },
   ingredients: {
-    type: [Schema.Types.ObjectId],
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: "Ingredient"
+    }],
     default: []
   },
   recipes: {
-    type: [Schema.Types.ObjectId],
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: "Recipe"
+    }],
     default: []
   },
   shoppingList: {
-    type: [Schema.Types.ObjectId],
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: "ShopListItem"
+    }],
     default: []
   },
   darkmode: {

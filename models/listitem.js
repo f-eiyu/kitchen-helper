@@ -19,6 +19,10 @@ const shopListSchema = new Schema({
   checked: {
     type: Boolean,
     default: false
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 }, {
   timestamps: true

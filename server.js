@@ -20,7 +20,7 @@ const app = require("liquid-express-views")(express());
 
 // app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(
   session({

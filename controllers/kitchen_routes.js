@@ -2,11 +2,12 @@
 const express = require("express");
 const router = express.Router();
 const Ingredient = require("../models/ingredient.js");
+const User = require("../models/user.js");
 
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
-  Ingredient.find({})
+  Ingredient.find({owner: req.session.userId})
     .then(ings => res.render("./kitchen/index.liquid", { ings }))
     .catch(err => {
       console.error(err);
@@ -26,11 +27,22 @@ router.post("/", (req, res) => {
 
   req.body.tags = tagArray;
   req.body.favorite = favorite;
+  req.body.owner = req.session.userId;
 
   Ingredient.create(req.body)
     .then(ing => {
-      console.log(`Created ingredient "${ing.name}".`)
-      res.redirect("/kitchen");
+      User.findById(req.body.owner)
+        .then(user => {
+          user.ingredients.push(ing);
+          user.save();
+          console.log(`Created ingredient "${ing.name}" for user "${user.username}".`)
+
+          res.redirect("/kitchen");
+        })
+        .catch(err => {
+          console.error(err);
+          res.send(`Error in /kitchen CREATE user update -- check the terminal.`);
+        });
     })
     .catch(err => {
       console.error(err);

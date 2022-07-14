@@ -28,6 +28,10 @@ const recipeSchema = new Schema({
   notes: { // update to sub-doc later
     type: [String],
     default: []
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 }, {
   timestamps: true
