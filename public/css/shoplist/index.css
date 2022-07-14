@@ -8,9 +8,8 @@ input[type="checkbox"] {
   margin-right: 0.5em;
 }
 
-label.list-item-checked {
-  color: #888;
-  text-decoration: line-through;
+input[type="checkbox"]+span {
+  color: green;
 }
 
 /* temp */

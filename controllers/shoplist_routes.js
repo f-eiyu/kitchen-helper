@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
   .then(user => user.shoppingList)
   .then(itemIds => {
     ShopList.find({"_id": {$in: itemIds} })
-      .sort({"updatedAt": -1})
+      .sort({"createdAt": -1})
       .then(shoplist => res.render("./shoplist/index.liquid", { shoplist }));
   })
   .catch(err => {
@@ -56,6 +56,19 @@ router.post("/", (req, res) => {
       res.send(`Error in /shoplist CREATE -- check the terminal.`);
     });
 })
+
+// Item checked/unchecked
+router.put("/", (req, res) => {
+  const itemId = Object.keys(req.body)[0];
+  const check = (req.body[itemId] === "on");
+
+  ShopList.findById(itemId)
+    .then(item => {
+      item.checked = check;
+      item.save();
+    })
+    .then(res.redirect("/shoplist"));
+});
 
 // Edit
 router.get("/:itemId/edit", (req, res) => {
