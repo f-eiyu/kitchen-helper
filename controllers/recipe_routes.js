@@ -41,12 +41,18 @@ const parseRecipeInput = (toParse) => {
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
-  Recipe.find({owner: req.session.userId})
-    .then(recipes => res.render("./recipes/index.liquid", { recipes }))
-    .catch(err => {
-      console.error(err);
-      res.send("Error in /recipes GET -- check the terminal.");
-    });
+  // only retrieve recipes belonging to the current user
+  User.findById(req.session.userId)
+  .then(user => user.recipes)
+  .then(recipeIds => {
+    Recipe.find({"_id": {$in: recipeIds} })
+      .sort({"updatedAt": -1})
+      .then(recipes => res.render("./recipes/index.liquid", { recipes }));
+  })
+  .catch(err => {
+    console.error(err);
+    res.send("Error in /recipes GET -- check the terminal.");
+  });
 });
 
 // New
@@ -121,13 +127,25 @@ router.put("/:recipeId", (req, res) => {
 });
 
 // Delete
-router.delete("/:recipeId", (req, res) => {
-  Recipe.findByIdAndRemove(req.params.recipeId)
-    .then(() => res.redirect("/recipes"))
-    .catch(err => {
-      console.error(err);
-      res.send(`Error in /recipes/${req.params.recipeId} DELETE -- check the terminal.`);
-    })
+router.delete("/:recipeId", async (req, res) => {
+  const toDel = await Recipe.findById(req.params.recipeId);
+  const user = await User.findById(req.session.userId);
+
+  if (user._id.equals(toDel.owner)) {
+    // first remove recipe from user
+    const recipeIndex = user.recipes.indexOf(toDel._id);
+    if (recipeIndex !== -1) {
+      user.recipes.splice(recipeIndex, 1);
+      user.save();
+    }
+    // then, delete recipe from the database
+    console.log(`Deleting recipe "${toDel.name}" for user ${user.username}.`)
+    await toDel.delete();
+
+    res.redirect("/recipes");
+  } else {
+    res.send("user mismatch")
+  }
 });
 
 // ========== Exports ==========

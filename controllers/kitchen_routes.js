@@ -7,12 +7,18 @@ const User = require("../models/user.js");
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
-  Ingredient.find({owner: req.session.userId})
-    .then(ings => res.render("./kitchen/index.liquid", { ings }))
-    .catch(err => {
-      console.error(err);
-      res.send("Error in /kitchen GET -- check the terminal.");
-    });
+  // only retrieve ingredients belonging to the current user
+  User.findById(req.session.userId)
+  .then(user => user.ingredients)
+  .then(ingIds => {
+    Ingredient.find({"_id": {$in: ingIds} })
+      .sort({"updatedAt": -1})
+      .then(ings => res.render("./kitchen/index.liquid", { ings }));
+  })
+  .catch(err => {
+    console.error(err);
+    res.send("Error in /kitchen GET -- check the terminal.");
+  });
 });
 
 // New
@@ -94,13 +100,25 @@ router.put("/:id", (req, res) => {
 });
 
 // Delete
-router.delete("/:ingId", (req, res) => {
-  Ingredient.findByIdAndRemove(req.params.ingId)
-    .then(() => res.redirect("/kitchen"))
-    .catch(err => {
-      console.error(err);
-      res.send(`Error in /kitchen/${req.params.ingId} DELETE -- check the terminal.`);
-    });
+router.delete("/:ingId", async (req, res) => {
+  const toDel = await Ingredient.findById(req.params.ingId);
+  const user = await User.findById(req.session.userId);
+
+  if (user._id.equals(toDel.owner)) {
+    // first remove ingredient from user
+    const ingIndex = user.ingredients.indexOf(toDel._id);
+    if (ingIndex !== -1) {
+      user.ingredients.splice(ingIndex, 1);
+      user.save();
+    }
+    // then, delete recipe from the database
+    console.log(`Deleting ingredient "${toDel.name}" for user ${user.username}.`)
+    await toDel.delete();
+
+    res.redirect("/kitchen");
+  } else {
+    res.send("user mismatch")
+  }
 });
 
 // ========== Exports ==========

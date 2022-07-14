@@ -10,12 +10,18 @@ const User = require("../models/user.js");
 
 // Index
 router.get("/", (req, res) => {
-  ShopList.find({owner: req.session.userId})
-    .then(list => res.render("./shoplist/index.liquid", { shoplist: list }))
-    .catch(err => {
-      console.error(err);
-      res.send("Error in /shoplist GET -- check the terminal.");
-    });
+  // only retrieve shopping list items belonging to the current user
+  User.findById(req.session.userId)
+  .then(user => user.shoppingList)
+  .then(itemIds => {
+    ShopList.find({"_id": {$in: itemIds} })
+      .sort({"updatedAt": -1})
+      .then(shoplist => res.render("./shoplist/index.liquid", { shoplist }));
+  })
+  .catch(err => {
+    console.error(err);
+    res.send("Error in /shoplist GET -- check the terminal.");
+  });
 });
 
 // New
@@ -80,13 +86,25 @@ router.put("/:itemId", (req, res) => {
 });
 
 // Delete
-router.delete("/:itemId", (req, res) => {
-  ShopList.findByIdAndDelete(req.params.itemId)
-    .then(() => res.redirect("/shoplist"))
-    .catch(err => {
-      console.error(err);
-      res.send(`Error in /shoplist/${req.params.itemId} DELETE -- check the terminal.`);
-    });
+router.delete("/:itemId", async (req, res) => {
+  const toDel = await ShopList.findById(req.params.itemId);
+  const user = await User.findById(req.session.userId);
+
+  if (user._id.equals(toDel.owner)) {
+    // first remove item from user
+    const shopListIndex = user.shoppingList.indexOf(toDel._id);
+    if (shopListIndex !== -1) {
+      user.shoppingList.splice(shopListIndex, 1);
+      user.save();
+    }
+    // then, delete recipe from the database
+    console.log(`Deleting shopping list item "${toDel.name}" for user ${user.username}.`)
+    await toDel.delete();
+
+    res.redirect("/shoplist");
+  } else {
+    res.send("user mismatch")
+  }
 });
 
 // ========== Exports ==========
