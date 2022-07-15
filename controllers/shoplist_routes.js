@@ -13,17 +13,12 @@ const User = require("../models/user.js");
 // Index
 router.get("/", (req, res) => {
   // only retrieve shopping list items belonging to the current user
-  User.findById(req.session.userId)
-  .then(user => user.shoppingList)
-  .then(itemIds => {
-    ShopList.find({"_id": {$in: itemIds} })
-      .sort({"createdAt": -1})
-      .then(shoplist => res.render("./shoplist/index.liquid", { shoplist }));
-  })
-  .catch(err => {
-    console.error(err);
-    res.send("Error in /shoplist GET -- check the terminal.");
-  });
+  ShopList.find({owner: req.session.userId})
+    .then(shoplist => res.render("./shoplist/index.liquid", { shoplist }))
+    .catch(err => {
+      console.error(err);
+      res.send("Error in /shoplist GET -- check the terminal.");
+    });
 });
 
 // New

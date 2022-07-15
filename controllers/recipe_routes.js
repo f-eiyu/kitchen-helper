@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Ingredient = require("../models/ingredient.js");
 const Recipe = require("../models/recipe.js");
+const ShopList = require("../models/listitem.js");
 const User = require("../models/user.js");
 
 // ========== Utilities ==========
@@ -199,6 +200,69 @@ router.get("/:recipeId/edit", (req, res) => {
       console.error(err);
       res.send(`Error in /recipes/${req.params.recipeId} EDIT -- check the terminal.`);
     });
+});
+
+// Make recipe -- deducts ingredients from user's kitchen. should maybe be put?
+router.get("/:recipeId/make", async (req, res) => {
+  const recipe = await Recipe.findById(req.params.recipeId);
+  const recipeIngs = recipe.ingredientList;
+
+  for (let thisRecipeIng of recipeIngs) {
+    const thisUserIng = await Ingredient.findById(thisRecipeIng.ingRef);
+    if (thisUserIng) {
+      thisUserIng.amount = Math.max(thisUserIng.amount - thisRecipeIng.amount, 0);
+      thisUserIng.save();
+    }
+  }
+
+  res.redirect("/recipes");
+});
+
+// Transfer -- adds missing/insufficient ingredients to user's shopping list
+router.get("/:recipeId/transfer", async (req, res) => {
+  const recipe = await Recipe.findById(req.params.recipeId);
+  const recipeIngs = recipe.ingredientList;
+
+  const toTransfer = []; // {name, amount}
+  for (let thisRecipeIng of recipeIngs) {
+    const thisUserIng = await Ingredient.findById(thisRecipeIng.ingRef);
+    if (thisUserIng) {
+      // if the user has the ingredient only transfer the difference
+      // ## TODO: keep track of amount in shopping list as well
+      const ingDiff = thisRecipeIng.amount - thisUserIng.amount;
+      if (ingDiff > 0) {
+        toTransfer.push({
+          name: thisRecipeIng.name,
+          amount: ingDiff,
+          owner: req.session.userId
+        });
+      }
+    } else { // always transfer completely if user doesn't have the ingredient
+      toTransfer.push({
+        name: thisRecipeIng.name,
+        amount: thisRecipeIng.amount,
+        owner: req.session.userId
+      });
+    }
+  }
+
+  // finally, upsert the appropriate items to the shopping list
+  for (let ing of toTransfer) {
+    const thisTransfer = await ShopList.findOneAndUpdate(
+      {
+        name: ing.name,
+        owner: req.session.userId
+      },
+      {
+        $inc: {"amount": ing.amount}
+      },
+      {
+        new: true,
+        upsert: true
+      }
+    );
+  }
+  res.redirect(`/recipes/${req.params.recipeId}`);
 });
 
 // Update

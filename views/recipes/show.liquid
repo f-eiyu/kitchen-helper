@@ -34,7 +34,9 @@
     <li>updated: {{recipe.updatedAt}}</li>
     <li>id: {{recipe._id}}</li>
   </ul>
-  <a href="/recipes/{{recipe._id}}/edit">Edit Recipe</a>
+  <p><a href="/recipes/{{recipe._id}}/edit">Edit Recipe</a></p>
+  <p><a href="/recipes/{{recipe._id}}/make">I made this!</a></p>
+  <p><a href="/recipes/{{recipe._id}}/transfer">Transfer to SL</a></p>
 </div>
 <a href="/recipes">Back</a>
 {% endblock %}
