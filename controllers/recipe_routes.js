@@ -2,20 +2,32 @@
 const express = require("express");
 const router = express.Router();
 
+const Ingredient = require("../models/ingredient.js");
 const Recipe = require("../models/recipe.js");
 const User = require("../models/user.js");
 
 // ========== Utilities ==========
-const parseRecipeInput = (toParse) => {
-  console.log(toParse);
+// creates a relationship between each ingredient of a recipe and the matching
+// ingredient in the user's kitchen, if the kitchen has it.
+const linkIngredients = async (ingredientList) => {
+  await Promise.all(ingredientList.map(async recipeIng => {
+    const ingRef = await Ingredient.find({name: recipeIng.name});
+    if (ingRef.length) { recipeIng.ingRef = ingRef[0]._id; }
+    else { recipeIng.ingRef = null; }
+  }));
+}
 
+// cleans up the raw input provided by req.body
+const parseRecipeInput = async (toParse) => {
   const ingredientList = [];
   toParse.ingredients.forEach((ing, i) => {
+    if (!ing) { return; }
     ingredientList.push({
       name: ing,
       amount: toParse.amounts[i]
     });
   });
+  await linkIngredients(ingredientList);
 
   const favorite = (toParse.favorite === "on");
 
@@ -29,7 +41,7 @@ const parseRecipeInput = (toParse) => {
     notes = toParse.notes.split(",").map(note => note.trim());
   } else { notes = []; }
 
-  return {
+  const parsedIng = {
     name: toParse.name,
     ingredientList,
     instructions: toParse.instructions,
@@ -37,6 +49,7 @@ const parseRecipeInput = (toParse) => {
     tags,
     notes
   };
+  return parsedIng;
 }
 
 // ========== Routes ==========
@@ -62,8 +75,8 @@ router.get("/new", (req, res) => {
 });
 
 // Create
-router.post("/", (req, res) => {
-  const newRecipe = parseRecipeInput(req.body);
+router.post("/", async (req, res) => {
+  const newRecipe = await parseRecipeInput(req.body);
   newRecipe.owner = req.session.userId;
 
   Recipe.create(newRecipe)
@@ -85,6 +98,47 @@ router.post("/", (req, res) => {
       console.error(err);
       res.send(`Error in /recipes CREATE -- check the terminal.`);
     })
+});
+
+// Filter
+router.get("/filter", async (req, res) => {
+  // first, find all recipes and ingredients for the user
+  const recipeList = await Recipe.find(
+    {"owner": req.session.userId},
+    {"name": 1, "ingredientList": 1}
+  );
+
+  const filteredRecipes = [];
+  for (let recipe of recipeList) {
+    let includeThisRecipe = true;
+    for (let thisRecipeIng of recipe.ingredientList) {
+      const thisKitchenIng = await Ingredient.findById(thisRecipeIng.ingRef);
+      // exclude if the ingredient is not in the user's kitchen
+      if (!thisKitchenIng) { 
+        includeThisRecipe = false;
+        break;
+      }
+      // exclude if the user's kitchen does not have enough of this ingredient
+      if (thisKitchenIng.amount < thisRecipeIng.amount) {
+        includeThisRecipe = false;
+        break;
+      }
+     }
+
+     // include if all ingredients have passed their checks
+     if (includeThisRecipe) { filteredRecipes.push(recipe); }
+  }
+
+  res.render("./recipes/filter.liquid", { recipes: filteredRecipes });
+});
+
+// Search
+router.get("/search", (req, res) => {
+  res.send("search")
+});
+
+router.post("search", (req, res) => {
+  res.send("search results");
 });
 
 // Show

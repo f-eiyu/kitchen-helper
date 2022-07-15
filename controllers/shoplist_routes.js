@@ -153,14 +153,20 @@ router.post("/transfer-list", (req, res) => {
             rawResult: true
           }
         )
-          .then(updatedIng => {
+          .then(async updateData => {
+            const updatedItem = await Ingredient.findOne(updateData.value);
+            updatedItem.save(); // to trigger updateRecipeIngRefs() middleware
+            
+            return updateData;
+          })
+          .then(updateData => {
             // remove this item from user's shopping list
             const update = {
               $pull: {shoppingList: item._id}
             };
             // upsert this item to the user's ingredient list, if applicable
-            if (!updatedIng.lastErrorObject.updatedExisting) {
-              update["$push"] = {ingredients: updatedIng.value._id}
+            if (!updateData.lastErrorObject.updatedExisting) {
+              update["$push"] = {ingredients: updateData.value._id}
             }
 
             User.findByIdAndUpdate(

@@ -61,27 +61,47 @@ const seed = {
   },
 
   async seedRecipes(req, res) {
+    const linkIngredients = async (ingredientList) => {
+      await Promise.all(ingredientList.map(async recipeIng => {
+        const ingRef = await Ingredient.find({name: recipeIng.name});
+        if (ingRef.length) { recipeIng.ingRef = ingRef[0]._id; }
+        else { recipeIng.ingRef = null; }
+      }));
+
+      return ingredientList;
+    };
+
     const recipeSeed = [
       {
         name: "Cinnamon Challenge",
-        ingredientList: [
+        ingredientList: await linkIngredients([
           {name: "cinnamon", amount: 20},
           {name: "water", amount: 250}
-        ],
+        ]),
         instructions: "Put all the cinnamon in your mouth and swallow. Drink water if necessary.",
         tags: ["1/10 would not cinnamon again", "social media is awful"],
         owner: req.session.userId
       },
       {
         name: "Seed Smoothie",
-        ingredientList: [
+        ingredientList: await linkIngredients([
           {name: "apple", amount: 1},
           {name: "banana", amount: 1},
           {name: "coconut milk", amount: 50},
           {name: "cottage cheese", amount: 0.1}
-        ],
+        ]),
         instructions: "Put all ingredients in a blender and mix. Serve chilled. Regret life choices.",
         tags: ["making seed data is too much responsibility for me", "why did i do this"],
+        favorite: true,
+        owner: req.session.userId
+      },
+      {
+        name: "Water",
+        ingredientList: await linkIngredients([
+          {name: "water", amount: 10000},
+        ]),
+        instructions: "Hydration is good for you!",
+        tags: ["help i'm trapped in a seed data factory", "im slowly going crazy", "async is too much"],
         favorite: true,
         owner: req.session.userId
       }
@@ -114,7 +134,7 @@ const seed = {
     const shopListSeed = [
       {
         name: "water",
-        amount: 30,
+        amount: 300,
         owner: req.session.userId
       }, {
         name: "sugar",
@@ -122,7 +142,7 @@ const seed = {
         owner: req.session.userId
       }, {
         name: "cinnamon",
-        amount: 1,
+        amount: 100,
         owner: req.session.userId
       }, {
         name: "tide pods",

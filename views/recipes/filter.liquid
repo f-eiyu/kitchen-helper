@@ -7,14 +7,14 @@
 <link rel="stylesheet" href="/css/recipes/recipe_nav.css">
 {% endblock %}
 
-{% block header %}Recipe Book{% endblock %}
+{% block header %}Quick Filter{% endblock %}
 
 {% block content %}
   {% if recipes.size < 1 %}
-    <p>There is nothing in your recipe book :(</p>
+    <p>There's nothing you can make with what you have on hand :(</p>
   {% else %}
-  <a href="/recipes/filter">Quick Filter</a>
-  <a href="/recipes/search">Search</a>
+  <a href="/recipes">Back</a>
+  <h2>Here's what you can make:</h2>
     {% for recipe in recipes %}
       <div class="card">
         <h3>{{recipe.name}}</h3>
@@ -49,11 +49,4 @@
       </div>
     {% endfor %}
   {% endif %}
-
-  <form action="/recipes/new" class="new-item-button">
-    <input
-      type="submit"
-      value="+"
-    />
-  </form>
 {% endblock %}

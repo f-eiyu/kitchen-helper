@@ -10,7 +10,17 @@ const recipeSchema = new Schema({
     required: true
   },
   ingredientList: {
-    type: [{"name": String, "amount": Number}],
+    type: [{
+      "name": {
+        type: String,
+        required: true
+      },
+      "amount": Number,
+      "ingRef": {
+        type: Schema.Types.ObjectId,
+        ref: "Ingredient",
+      }
+    }],
      required: true
   },
   instructions: {
