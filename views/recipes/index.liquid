@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/css/recipes/recipe_nav.css">
 {% endblock %}
 
-{% block header %}Recipe Book{% endblock %}
+{% block header %}Recipe Book ({{recipes.size}}){% endblock %}
 
 {% block content %}
   {% if recipes.size < 1 %}

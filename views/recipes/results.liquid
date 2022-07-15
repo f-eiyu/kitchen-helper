@@ -7,14 +7,22 @@
 <link rel="stylesheet" href="/css/recipes/recipe_nav.css">
 {% endblock %}
 
-{% block header %}Quick Filter{% endblock %}
+{% block header %}
+  {% if quickFilter %} Quick Filter
+  {% else %} Search Results
+  {% endif %}
+{% endblock %}
 
 {% block content %}
   {% if recipes.size < 1 %}
-    <p>There's nothing you can make with what you have on hand :(</p>
+    {% if quickFilter %}
+      <p>There's nothing you can make with what you have on hand :(</p>
+    {% else %}
+      <p>No recipes matching your search were found :(</p>
+    {% endif %}
   {% else %}
   <a href="/recipes">Back</a>
-  <h2>Here's what you can make:</h2>
+  <h2>Found {{recipes.size}} recipe{% if recipes.size != 1 %}s{% endif %}:</h2>
     {% for recipe in recipes %}
       <div class="card">
         <h3>{{recipe.name}}</h3>

@@ -1,0 +1,56 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Recipe Search{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/recipes/recipe_nav.css">
+{% endblock %}
+
+{% block header %}Recipe Search{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form action="/recipes/search" method="POST">
+    <fieldset>
+      <legend>Find Recipes!</legend>
+
+      <label class="form-label" for="name">Name</label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+      />
+
+      <label class="form-label" for="ingredients[]">Ingredient</label>
+      <input
+        class="form-control"
+        type="text"
+        name="ingredients"
+        placeholder="Separate ingredients with commas"
+      />
+
+      <label class="form-label" for="tags">Tags</label>
+      <input
+        class="form-control"
+        type="text"
+        name="tags"
+        placeholder="Separate tags with commas"
+      />
+
+      <label class="form-label" for="favorite">Favorite?</label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        name="favorite"
+      />
+    </fieldset>
+
+    <input
+    type="submit"
+    value="Go!"
+    class="btn btn-success"
+  />
+  </form>
+</div>
+<a href="/recipes">Back</a>
+{% endblock %}

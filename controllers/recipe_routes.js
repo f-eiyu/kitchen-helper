@@ -52,6 +52,10 @@ const parseRecipeInput = async (toParse) => {
   return parsedIng;
 }
 
+const sanitizeRegex = (str) => {
+  return new RegExp(str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "i");
+}
+
 // ========== Routes ==========
 // Index
 router.get("/", (req, res) => {
@@ -129,16 +133,48 @@ router.get("/filter", async (req, res) => {
      if (includeThisRecipe) { filteredRecipes.push(recipe); }
   }
 
-  res.render("./recipes/filter.liquid", { recipes: filteredRecipes });
+  res.render("./recipes/results.liquid", {
+    recipes: filteredRecipes,
+    quickFilter: true
+  });
 });
 
 // Search
 router.get("/search", (req, res) => {
-  res.send("search")
+  res.render("./recipes/search.liquid");
 });
 
-router.post("search", (req, res) => {
-  res.send("search results");
+router.post("/search", async (req, res) => {
+  const body = req.body;
+  const searchParams = {};
+
+  // we use if statements here to explicitly not set the search parameters
+  // unless they are being searched for. this is particularly relevant for the
+  // name search, which would default to an extremely slow empty regex if not
+  // handled this way.
+  if (body.name !== "") {
+    searchParams.name = {$regex: sanitizeRegex(body.name)};
+  }
+  if (body.ingredients !== "") {
+    let rawIngs = body.ingredients.split(",");
+    rawIngs = rawIngs.map(ing => ing.trim()).filter(ing => ing !== "");
+
+    searchParams["ingredientList.name"] = {$all: rawIngs};
+  }
+  if (body.tags !== "") {
+    const rawTags = body.tags.split(",");
+    searchParams.tags = {$all: rawTags.map(tag => tag.trim())};
+  }
+  if (body.favorite === "on") {
+    searchParams.favorite = true;
+  }
+
+  // now, go and find the desired recipes!
+  const searchResults = await Recipe.find(searchParams);
+  res.render("./recipes/results.liquid", {
+    recipes: searchResults,
+    quickFilter: false
+  });
 });
 
 // Show
