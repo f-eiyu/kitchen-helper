@@ -19,7 +19,10 @@
       <button
         id="transfer"
         target="/shoplist/transfer-list"
-      />
+        {% if transferEnabled == false %}
+          disabled
+        {% endif %}
+      >
         Transfer to Kitchen
       </button>
       {% for item in shoplist %}

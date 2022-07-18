@@ -46,6 +46,10 @@ const userSchema = new Schema({
     autoshift: {
       type: Boolean,
       default: false
+    },
+    useMilitaryTime: {
+      type: Boolean,
+      default: false
     }
   }
 }, {

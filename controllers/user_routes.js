@@ -69,6 +69,7 @@ router.get("/settings", (req, res) => {
       userSettings.prefname = user.prefname;
       userSettings.darkmode = user.settings.darkmode;
       userSettings.autoshift = user.settings.autoshift;
+      userSettings.useMilitaryTime = user.settings.useMilitaryTime;
       res.render("./account/settings.liquid", { userSettings });
     })
     .catch(err => {
@@ -82,12 +83,14 @@ router.put("/save-settings", (req, res) => {
   const newPrefs = req.body;
   newPrefs.darkmode = (req.body.darkmode === "on");
   newPrefs.autoshift = (req.body.autoshift === "on");
+  newPrefs.useMilitaryTime = (req.body.timedisp === "24");
   
   User.findById(req.session.userId)
     .then(user => {
       user.prefname = newPrefs.prefname;
       user.settings.darkmode = newPrefs.darkmode;
       user.settings.autoshift = newPrefs.autoshift;
+      user.settings.useMilitaryTime = newPrefs.useMilitaryTime;
       user.save();
 
       res.redirect("/");

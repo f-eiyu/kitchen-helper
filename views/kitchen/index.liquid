@@ -18,12 +18,12 @@
     {% for ing in ings %}
       <div class="card">
         <div class="card-title">
-          <h3>{{ing.name}}</h3>
+          <h4>{{ing.name}}</h4>
           {% if ing.favorite %}
             <img class="favorite-icon" src="./img/favorite.png" />
           {% endif %}
         </div>
-        <div>{{ing.amount}} on hand (updated {{ing.updatedAt}})</div>
+        <div class="card-text">{{ing.amount}} on hand (updated {{ing.renderedDate}})</div>
 
         <!-- <ul>
           <li>amount: {{ing.amount}}</li>

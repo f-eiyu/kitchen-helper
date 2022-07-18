@@ -42,6 +42,25 @@
       <label for="darkmode-no">No</label>
       <label class="form-pseudo-tooltip">Easier on the eyes!</label>
 
+      <label class="form-label" for="timedisp">Time Display</label>
+      <input
+        type="radio"
+        name="timedisp"
+        id="timedisp-12h"
+        value="12"
+        {% if userSettings.useMilitaryTime == false %} checked {% endif %}
+      />
+      <label for="timedisp-12h">12-hour time</label>
+      <input
+      type="radio"
+      name="timedisp"
+      id="timedisp-24h"
+      value="24"
+      {% if userSettings.useMilitaryTime %} checked {% endif %}
+    />
+    <label for="timedisp-24h">24-hour time</label>
+    
+
       <h3>Shopping List Settings</h3>
       <label class="form-label" for="shift-checked">Autoshift checked items?</label>
       <input

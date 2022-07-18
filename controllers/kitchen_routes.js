@@ -5,21 +5,38 @@ const router = express.Router();
 const Ingredient = require("../models/ingredient.js");
 const User = require("../models/user.js");
 
+const parseDate = require("../middleware/parse-date.js");
+
 // ========== Routes ==========
 // Index
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // only retrieve ingredients belonging to the current user
-  User.findById(req.session.userId)
-  .then(user => user.ingredients)
-  .then(ingIds => {
-    Ingredient.find({"_id": {$in: ingIds} })
-      .sort({"updatedAt": -1})
-      .then(ings => res.render("./kitchen/index.liquid", { ings }));
-  })
-  .catch(err => {
-    console.error(err);
-    res.send("Error in /kitchen GET -- check the terminal.");
-  });
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+  const ingList = await Ingredient.find({owner: req.session.userId});
+
+  ingList.sort((ing1, ing2) => (ing2.updatedAt - ing1.updatedAt));
+  for (let ing of ingList) {
+    ing.renderedDate = parseDate(ing.updatedAt, useMilitaryTime);
+  }
+  res.render("./kitchen/index.liquid", {ings: ingList});
+
+  // User.findById(req.session.userId)
+  // .then(user => user.ingredients)
+  // .then(ingIds => {
+  //   Ingredient.find({"_id": {$in: ingIds} })
+  //     .sort({"updatedAt": -1})
+  //     .then(ings => {
+  //       for (let ing of ings) {
+  //         ing.renderedDate = parseDate(ing.updatedAt);
+  //       }
+  //       res.render("./kitchen/index.liquid", { ings })
+  //     });
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  //   res.send("Error in /kitchen GET -- check the terminal.");
+  // });
 });
 
 // New

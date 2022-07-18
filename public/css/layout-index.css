@@ -3,13 +3,8 @@ div.card {
   max-width: 90vw;
 
   margin: 20px auto;
-  padding: 0;
 
   box-shadow: 2px 2px 8px #333;
-}
-
-div.card-title > h3 {
-  margin: 0;
 }
 
 div.card-title {
@@ -19,4 +14,16 @@ div.card-title {
   padding: 0;
 
   margin: 8px 18px 0 10px;
+}
+
+div.card-title > h4 {
+  margin: 0;
+}
+
+img.favorite-icon {
+  height: 1.5em;
+}
+
+div.card-text {
+  padding: 0 16px;
 }
