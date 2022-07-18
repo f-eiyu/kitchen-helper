@@ -1,0 +1,22 @@
+div.card {
+  width: 30rem;
+  max-width: 90vw;
+
+  margin: 20px auto;
+  padding: 0;
+
+  box-shadow: 2px 2px 8px #333;
+}
+
+div.card-title > h3 {
+  margin: 0;
+}
+
+div.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+
+  margin: 8px 18px 0 10px;
+}

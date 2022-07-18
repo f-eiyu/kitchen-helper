@@ -15,7 +15,7 @@ const transferEvent = async (event) => {
   });
 
   if (!checkedIds.length) {
-    alert("nothing is checked");
+    alert("No Shopping List items are checked!");
     return;
   }
 

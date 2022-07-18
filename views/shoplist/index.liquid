@@ -3,8 +3,10 @@
 {% block title %}Shopping List{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/css/shoplist/index.css">
+<link rel="stylesheet" href="/css/layout-index.css">
+
 <link rel="stylesheet" href="/css/shoplist/shoplist_nav.css">
+<link rel="stylesheet" href="/css/shoplist/index.css">
 {% endblock %}
 
 {% block header %}Shopping List{% endblock %}
@@ -17,7 +19,7 @@
       <button
         id="transfer"
         target="/shoplist/transfer-list"
-      >
+      />
         Transfer to Kitchen
       </button>
       {% for item in shoplist %}
