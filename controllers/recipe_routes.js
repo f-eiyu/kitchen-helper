@@ -266,8 +266,8 @@ router.get("/:recipeId/transfer", async (req, res) => {
 });
 
 // Update
-router.put("/:recipeId", (req, res) => {
-  const updatedRecipe = parseRecipeInput(req.body);
+router.put("/:recipeId", async (req, res) => {
+  const updatedRecipe = await parseRecipeInput(req.body);
 
   Recipe.findByIdAndUpdate(req.params.recipeId, updatedRecipe,
     {

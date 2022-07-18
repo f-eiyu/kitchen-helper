@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/css/kitchen/kitchen_nav.css">
 {% endblock %}
 
-{% block header %}What's in the Kitchen?{% endblock %}
+{% block header %}What's in the Kitchen? ({{ings.size}}){% endblock %}
 
 {% block content %}
   {% if ings.size < 1 %}
@@ -15,18 +15,26 @@
   {% else %}
     {% for ing in ings %}
       <div class="card">
-        <h3>{{ing.name}}</h3>
-        <ul>
+        <div class="card-title">
+          <h3>{{ing.name}}</h3>
+          {% if ing.favorite %}
+            <img class="favorite-icon" src="./img/favorite.png" />
+          {% endif %}
+        </div>
+        <div>{{ing.amount}} on hand (updated {{ing.updatedAt}})</div>
+
+        <!-- <ul>
           <li>amount: {{ing.amount}}</li>
-          <li>tags:
-            {% for tag in ing.tags %}
-              {{tag}}, 
-            {% endfor %}  
           </li>
-          <li>favorite? {{ing.favorite}}</li>
           <li>updated: {{ing.updatedAt}}</li>
-          <li>id: {{ing._id}}</li>
-        </ul>
+        </ul> -->
+          {% if ing.tags.size > 0 %}
+            <div id="tag-container">
+              {% for tag in ing.tags %}
+                <div class="ing-tag">{{tag}}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
 
         <a href="/kitchen/{{ing._id}}"><span class="card-link"></span></a>
 

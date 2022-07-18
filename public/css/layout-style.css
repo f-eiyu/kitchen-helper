@@ -29,6 +29,10 @@ h1 {
   background-color: black;
 }
 
+img.favorite-icon {
+  height: 1.5em;
+}
+
 form.new-item-button {
   display: flex;
   position: fixed;

@@ -83,9 +83,10 @@ router.get("/:ingId/edit", (req, res) => {
 // Update
 router.put("/:id", (req, res) => {
   const tagArray = req.body.tags.split(",").map(tag => tag.trim());
-  const favorite = (req.body.favorite === "on");
+  if (tagArray.every(el => el === "")) { req.body.tags = []; }
+  else { req.body.tags = tagArray; }
 
-  req.body.tags = tagArray;
+  const favorite = (req.body.favorite === "on");
   req.body.favorite = favorite;
 
   Ingredient.findByIdAndUpdate(req.params.id, req.body,

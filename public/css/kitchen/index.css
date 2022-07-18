@@ -8,8 +8,17 @@ div.card {
   box-shadow: 2px 2px 8px #333;
 }
 
-div.card > h3 {
-  margin: 12px auto auto 12px;
+div.card-title > h3 {
+  margin: 0;
+}
+
+div.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+
+  margin: 8px 18px 10px 10px;
 }
 
 a > span.card-link {
@@ -23,18 +32,36 @@ a > span.card-link {
   z-index: 1;
 }
 
+#tag-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  margin: 10px;
+
+  font-size: small;
+}
+
+div.ing-tag {
+  margin: 1px 3px;
+  padding: 1px 3px;
+
+  border: solid steelblue 1px;
+  border-radius: 3px;
+}
+
 ul.ingredient-nav {
   background-color: steelblue;
   
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-
+  
   z-index: 2;
 }
 
 ul.ingredient-nav > .nav-item {
   height: 100%;
-  width: 33.3%;
+  width: 33%;
 
   margin: 0;
 }
