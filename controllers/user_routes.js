@@ -65,10 +65,11 @@ router.post("/login", (req, res) => {
 router.get("/settings", (req, res) => {
   User.findById(req.session.userId)
     .then(user => {
-      const userinfo = [];
-      userinfo.prefname = user.prefname;
-      userinfo.darkmode = user.darkmode;
-      res.render("./account/settings.liquid", { userinfo });
+      const userSettings = [];
+      userSettings.prefname = user.prefname;
+      userSettings.darkmode = user.settings.darkmode;
+      userSettings.autoshift = user.settings.autoshift;
+      res.render("./account/settings.liquid", { userSettings });
     })
     .catch(err => {
       console.error(err);
@@ -80,11 +81,13 @@ router.get("/settings", (req, res) => {
 router.put("/save-settings", (req, res) => {
   const newPrefs = req.body;
   newPrefs.darkmode = (req.body.darkmode === "on");
+  newPrefs.autoshift = (req.body.autoshift === "on");
   
   User.findById(req.session.userId)
     .then(user => {
       user.prefname = newPrefs.prefname;
-      user.darkmode = newPrefs.darkmode;
+      user.settings.darkmode = newPrefs.darkmode;
+      user.settings.autoshift = newPrefs.autoshift;
       user.save();
 
       res.redirect("/");
@@ -101,16 +104,6 @@ router.get("/logout", (req, res) => {
   req.session.destroy(sess => {
     res.redirect("/");
   });
-});
-
-// Darkmode toggle
-router.post("/toggle-darkmode", (req, res) => {
-  User.findById(req.session.userId)
-    .then(user => {
-      user.darkmode = !user.darkmode;
-      user.save();
-    })
-    .finally(res.redirect("/"));
 });
 
 // ========== Exports ==========

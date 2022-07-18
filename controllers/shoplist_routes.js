@@ -11,14 +11,30 @@ const User = require("../models/user.js");
 // information that it will all just be displayed on the list.
 
 // Index
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // only retrieve shopping list items belonging to the current user
-  ShopList.find({owner: req.session.userId})
-    .then(shoplist => res.render("./shoplist/index.liquid", { shoplist }))
-    .catch(err => {
-      console.error(err);
-      res.send("Error in /shoplist GET -- check the terminal.");
-    });
+  const thisShopList = await ShopList.find({owner: req.session.userId});
+  const thisUser = await User.findById(req.session.userId);
+  
+  // sort checked items to the bottom of the shopping list, if applicable
+  if (thisUser.settings.autoshift) {
+    // not the most efficient solution, but easy to write.
+    
+    // first, enumerate all unchecked items.
+    const theseUnchecked = thisShopList.filter(item => !item.checked);
+    // then, enumerate all checked items and sort in reverse chronological order
+    const theseChecked = thisShopList.filter(item => item.checked);
+    theseChecked.sort((item1, item2) => {
+      return item2.updatedAt - item1.updatedAt;
+    })
+
+    // clear thisShopList and rebuild it with the correctly ordered list
+    thisShopList.splice(0, thisShopList.length);
+    thisShopList.push(...theseUnchecked);
+    thisShopList.push(...theseChecked);
+  }
+
+  res.render("./shoplist/index.liquid", { shoplist: thisShopList });
 });
 
 // New
@@ -52,7 +68,7 @@ router.post("/", (req, res) => {
 })
 
 // Item checked/unchecked
-router.put("/", (req, res) => {
+router.put("/", async (req, res) => {
   const itemId = Object.keys(req.body)[0];
   const check = (req.body[itemId] === "on");
 

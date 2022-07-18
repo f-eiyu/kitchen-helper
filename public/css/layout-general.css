@@ -1,4 +1,5 @@
 /* dark mode support */
+
 :root[color-mode="light"] {
   --bgcolor: honeydew;
 }
@@ -6,6 +7,8 @@
 :root[color-mode="dark"] {
   --bgcolor: slategrey;
 }
+
+/* general aesthetics */
 
 html {
   overflow-y: scroll;
@@ -22,17 +25,16 @@ h1 {
   margin-bottom: 25px;
 }
 
-#global-nav {
-  display: flex;
-  justify-content: flex-start;
+/* main UI styling */
+div.card {
 
-  background-color: black;
 }
 
 img.favorite-icon {
   height: 1.5em;
 }
 
+/* bottom-right "new item" button */
 form.new-item-button {
   display: flex;
   position: fixed;
@@ -63,4 +65,12 @@ form.new-item-button > input {
 
   background: none;
   border: none;
+}
+
+/* navbar stuff */
+#global-nav {
+  display: flex;
+  justify-content: flex-start;
+
+  background-color: black;
 }

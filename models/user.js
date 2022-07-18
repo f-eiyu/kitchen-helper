@@ -38,9 +38,15 @@ const userSchema = new Schema({
     }],
     default: []
   },
-  darkmode: {
-    type: Boolean,
-    default: false
+  settings: {
+    darkmode: {
+      type: Boolean,
+      default: false
+    },
+    autoshift: {
+      type: Boolean,
+      default: false
+    }
   }
 }, {
   timestamps: true
