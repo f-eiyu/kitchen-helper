@@ -1,7 +1,7 @@
 /* dark mode support */
 
 :root[color-mode="light"] {
-  --bgcolor: honeydew;
+  --bgcolor: aliceblue;
 }
 
 :root[color-mode="dark"] {
@@ -15,9 +15,16 @@ html {
 }
 
 body {
-  padding: 2%;
+  padding: 12px 2% 36px 2%;
   
   background: var(--bgcolor);
+}
+
+#content-container {
+  width: 600px;
+  max-width: 96vw;
+
+  margin: 0 auto;
 }
 
 h1 {
@@ -30,40 +37,8 @@ hidden {
   display: none;
 }
 
-/* bottom-right "new item" button */
-form.new-item-button {
-  display: flex;
-  position: fixed;
-  bottom: 10vh;
-  right: 6vw;
-
-  height: 20vh;
-  width: 20vh;
-  max-height: 50px;
-  max-width: 50px;
-
-  border: solid 1px black;
-  border-radius: 100%;
-
-  background-color: lightgreen;
-  box-shadow: 2px 2px 5px black;
-
-  font-size: 3em;
-}
-
-form.new-item-button > input {
-  height: inherit;
-  width: inherit;
-  border: none;
-  border-radius: inherit;
-  justify-self: center;
-  align-self: center;
-
-  background: none;
-  border: none;
-}
-
 /* navbar stuff */
+
 #global-nav {
   display: flex;
   justify-content: flex-start;

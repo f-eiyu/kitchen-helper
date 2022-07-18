@@ -1,20 +1,31 @@
-a > span.card-link {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* search bar */
 
-  height: 100%;
+#search-bar {
+  display: flex;
+  justify-content: center;
+
   width: 100%;
 
-  z-index: 1;
+  margin-bottom: 30px;
 }
+
+#search-bar > * {
+  display: inline;
+  margin: 0 5px;
+}
+
+#search-bar > input[type="text"] {
+  width: 80%;
+}
+
+/* general card rendering */
 
 #tag-container {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  margin: 10px;
+  margin: 0 10px 10px 10px;
 
   font-size: small;
 }
@@ -27,13 +38,13 @@ div.ing-tag {
   border-radius: 3px;
 }
 
+/* bottom navbar */
+
 ul.ingredient-nav {
   background-color: steelblue;
   
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  
-  z-index: 2;
 }
 
 ul.ingredient-nav > .nav-item {

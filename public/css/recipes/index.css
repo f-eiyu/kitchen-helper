@@ -8,19 +8,8 @@ div.card {
   box-shadow: 2px 2px 8px #333;
 }
 
-div.card > h3 {
+div.card > h4 {
   margin: 12px auto auto 12px;
-}
-
-a > span.card-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  height: 100%;
-  width: 100%;
-
-  z-index: 1;
 }
 
 /* temp */

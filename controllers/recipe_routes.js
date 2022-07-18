@@ -7,6 +7,9 @@ const Recipe = require("../models/recipe.js");
 const ShopList = require("../models/listitem.js");
 const User = require("../models/user.js");
 
+const sanitizeRegex = require("../utils/sanitize-regex.js");
+const parseDate = require("../utils/parse-date.js");
+
 // ========== Utilities ==========
 // creates a relationship between each ingredient of a recipe and the matching
 // ingredient in the user's kitchen, if the kitchen has it.
@@ -53,25 +56,23 @@ const parseRecipeInput = async (toParse) => {
   return parsedIng;
 }
 
-const sanitizeRegex = (str) => {
-  return new RegExp(str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "i");
-}
-
 // ========== Routes ==========
 // Index
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // only retrieve recipes belonging to the current user
-  User.findById(req.session.userId)
-  .then(user => user.recipes)
-  .then(recipeIds => {
-    Recipe.find({"_id": {$in: recipeIds} })
-      .sort({"updatedAt": -1})
-      .then(recipes => res.render("./recipes/index.liquid", { recipes }));
-  })
-  .catch(err => {
-    console.error(err);
-    res.send("Error in /recipes GET -- check the terminal.");
-  });
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+  const recipeList = await Recipe.find({owner: req.session.userId});
+
+  /* TODO: sort by something other than reverse chronological
+  const sortOrder = req.query.sort;
+  */
+  recipeList.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
+  for (let rec of recipeList) {
+    rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+  }
+
+  res.render("./recipes/index.liquid", { recipes: recipeList });
 });
 
 // New
@@ -107,11 +108,11 @@ router.post("/", async (req, res) => {
 
 // Filter
 router.get("/filter", async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+
   // first, find all recipes and ingredients for the user
-  const recipeList = await Recipe.find(
-    {"owner": req.session.userId},
-    {"name": 1, "ingredientList": 1}
-  );
+  const recipeList = await Recipe.find({"owner": req.session.userId});
 
   const filteredRecipes = [];
   for (let recipe of recipeList) {
@@ -134,6 +135,12 @@ router.get("/filter", async (req, res) => {
      if (includeThisRecipe) { filteredRecipes.push(recipe); }
   }
 
+  for (let rec of filteredRecipes) {
+    rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+  }
+  // TODO: custom sort??
+  filteredRecipes.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
+
   res.render("./recipes/results.liquid", {
     recipes: filteredRecipes,
     quickFilter: true
@@ -146,6 +153,9 @@ router.get("/search", (req, res) => {
 });
 
 router.post("/search", async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+
   const body = req.body;
   const searchParams = {};
 
@@ -172,6 +182,12 @@ router.post("/search", async (req, res) => {
 
   // now, go and find the desired recipes!
   const searchResults = await Recipe.find(searchParams);
+  for (let rec of searchResults) {
+    rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+  }
+  // TODO: custom sort??
+  searchResults.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
+
   res.render("./recipes/results.liquid", {
     recipes: searchResults,
     quickFilter: false
@@ -179,9 +195,15 @@ router.post("/search", async (req, res) => {
 });
 
 // Show
-router.get("/:recipeId", (req, res) => {
+router.get("/:recipeId", async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+
   Recipe.findById(req.params.recipeId)
-    .then(recipe => res.render("./recipes/show.liquid", { recipe }))
+    .then(recipe => {
+      recipe.renderedDate = parseDate(recipe.updatedAt, useMilitaryTime);
+      res.render("./recipes/show.liquid", { recipe })
+    })
     .catch(err => {
       console.error(err);
       res.send(`Error in /recipes/${req.params.recipeId} SHOW -- check the terminal.`);

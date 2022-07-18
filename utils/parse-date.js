@@ -70,7 +70,7 @@ const parseDate = async (toParse, useMilitaryTime = false) => {
 
   const outputTime = `${outHrs}:${outMins}${outPostfix}`;
 
-  const output = `${outputDate}, at ${outputTime}`;
+  const output = `${outputDate}, ${outputTime}`;
   return output;
 }
 

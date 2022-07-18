@@ -15,37 +15,47 @@
   {% if ings.size < 1 %}
     <p>There is nothing in your kitchen :(</p>
   {% else %}
+    <form id="search-bar" action="/kitchen/search" method="POST">
+      <input
+        class="form-control"
+        type="text"
+        name="query"
+        {% if searchParams %}
+          value="{{searchQuery}}"
+        {% else %}
+          placeholder="Search by name or tags"
+        {% endif %}
+      />
+      <input
+        type="submit"
+        value="Search"
+        class="btn btn-primary"
+      />
+    </form>
     {% for ing in ings %}
       <div class="card">
         <div class="card-title">
           <h4>{{ing.name}}</h4>
           {% if ing.favorite %}
-            <img class="favorite-icon" src="./img/favorite.png" />
+            <img class="favorite-icon" src="/img/favorite.png" />
           {% endif %}
         </div>
-        <div class="card-text">{{ing.amount}} on hand (updated {{ing.renderedDate}})</div>
+        <div class="card-text">{{ing.amount}} on hand as of {{ing.renderedDate}}</div>
 
-        <!-- <ul>
-          <li>amount: {{ing.amount}}</li>
-          </li>
-          <li>updated: {{ing.updatedAt}}</li>
-        </ul> -->
-          {% if ing.tags.size > 0 %}
-            <div id="tag-container">
-              {% for tag in ing.tags %}
-                <div class="ing-tag">{{tag}}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-        <a href="/kitchen/{{ing._id}}"><span class="card-link"></span></a>
+        {% if ing.tags.size > 0 %}
+          <div id="tag-container">
+            {% for tag in ing.tags %}
+              <div class="ing-tag">{{tag}}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
 
         <ul class="nav justify-content-around ingredient-nav">
           <li class="nav-item">
-            <form action="/kitchen/{{ing._id}}?_method=DELETE" method="POST">
+            <form action="/kitchen/{{ing._id}}">
               <input
                 type="submit"
-                value="Delete"
+                value="View"
                 class="ingredient-nav-button"
               />
             </form>

@@ -5,7 +5,8 @@ const router = express.Router();
 const Ingredient = require("../models/ingredient.js");
 const User = require("../models/user.js");
 
-const parseDate = require("../middleware/parse-date.js");
+const sanitizeRegex = require("../utils/sanitize-regex.js");
+const parseDate = require("../utils/parse-date.js");
 
 // ========== Routes ==========
 // Index
@@ -15,28 +16,38 @@ router.get("/", async (req, res) => {
   const { useMilitaryTime } = user.settings;
   const ingList = await Ingredient.find({owner: req.session.userId});
 
+  // sort in reverse alphabetical order
   ingList.sort((ing1, ing2) => (ing2.updatedAt - ing1.updatedAt));
   for (let ing of ingList) {
     ing.renderedDate = parseDate(ing.updatedAt, useMilitaryTime);
   }
   res.render("./kitchen/index.liquid", {ings: ingList});
+});
 
-  // User.findById(req.session.userId)
-  // .then(user => user.ingredients)
-  // .then(ingIds => {
-  //   Ingredient.find({"_id": {$in: ingIds} })
-  //     .sort({"updatedAt": -1})
-  //     .then(ings => {
-  //       for (let ing of ings) {
-  //         ing.renderedDate = parseDate(ing.updatedAt);
-  //       }
-  //       res.render("./kitchen/index.liquid", { ings })
-  //     });
-  // })
-  // .catch(err => {
-  //   console.error(err);
-  //   res.send("Error in /kitchen GET -- check the terminal.");
-  // });
+// Search results
+router.post("/search", async (req, res) => {
+  const rawQuery = sanitizeRegex(req.body.query);
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+  
+  const parsedQuery = {
+    $or: [
+      {name: rawQuery},
+      {tags: rawQuery}
+    ]
+  };
+
+  const searchResults = await Ingredient.find(parsedQuery);
+  for (let result of searchResults) {
+    result.renderedDate = parseDate(result.updatedAt, useMilitaryTime);
+  }
+  searchResults.sort((res1, res2) => (res2.updatedAt - res1.updatedAt));
+
+  res.render("./kitchen/index.liquid", {
+    ings: searchResults,
+    useMilitaryTime,
+    searchQuery: rawQuery
+  });
 });
 
 // New
@@ -75,9 +86,15 @@ router.post("/", (req, res) => {
 });
 
 // Show
-router.get("/:ingId", (req, res) => {
+router.get("/:ingId", async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  const { useMilitaryTime } = user.settings;
+  
   Ingredient.findById(req.params.ingId)
-    .then(ing => res.render("./kitchen/show.liquid", { ing }))
+    .then(ing => {
+      ing.renderedDate = parseDate(ing.updatedAt, useMilitaryTime);
+      res.render("./kitchen/show.liquid", { ing })
+    })
     .catch(err => {
       console.error(err);
       res.send(`Error in /kitchen/${req.params.ingId} GET -- check the terminal.`);
