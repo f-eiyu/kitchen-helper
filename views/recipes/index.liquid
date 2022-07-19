@@ -9,11 +9,27 @@
 <link rel="stylesheet" href="/css/recipes/index.css">
 {% endblock %}
 
-{% block header %}Recipe Book ({{recipes.size}}){% endblock %}
+{% block header %}
+  {% if source == "filter" %}
+    Quick Filter
+  {% elsif source == "search" %}
+    Search Results {{recipes.size}}
+  {% else %}
+    Recipe Book ({{recipes.size}})
+  {% endif %}
+{% endblock %}
 
 {% block content %}
   {% if recipes.size < 1 %}
-    <p>There is nothing in your recipe book :(</p>
+    <p>
+    {% if source == "filter" %}
+      There's nothing you can make with what's on hand. :(
+    {% elsif source == "search" %}
+      No recipes matching your search were found. :(
+    {% else %}
+      There is nothing in your recipe book. :(
+    {% endif %}
+    </p>
   {% else %}
     <form action="/recipes/filter">
       <input
@@ -29,34 +45,68 @@
     </form>
     {% for recipe in recipes %}
       <div class="card">
-        <h4>{{recipe.name}}</h4>
-        <ul>
-          <li>ingredients:
-            <ul>
-              {% for ing in recipe.ingredientList %}
-                <li>{{ing.name}}: {{ing.amount}}</li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li>tags:
+        <div class="card-title">
+          <h4>{{recipe.name}}</h4>
+          {% if recipe.favorite %}
+            <img class="favorite-icon" src="/img/favorite.png" />
+          {% endif %}
+        </div>
+        <div class="card-text">
+          <div class="card-description">
+            {{recipe.descVisible}}
+            {% if recipe.descReadmore != "" %}
+              <a
+                class="readmore-link"
+                id="a-readmore-{{forloop.index0}}"
+                href="javascript:void(0);">... Read more</a>
+              <span
+                class="readmore"
+                id="readmore-{{forloop.index0}}"
+              >
+                {{recipe.descReadmore}}
+              </span>
+            {% endif %}
+          </div>
+          <div class="card-updated">Last updated: {{recipe.renderedDate}}</div>
+        </div>
+          <div id="tag-container">
             {% for tag in recipe.tags %}
-              {{tag}}, 
+              <div class="ing-tag">{{tag}}</div>
             {% endfor %}  
-          </li>
-          <li>notes: {{recipe.notes}}</li>
+          </div>
 
-          <li>favorite? {{recipe.favorite}}</li>
-          <li>updated on {{recipe.renderedDate}}</li>
+        <ul class="nav justify-content-around recipe-nav">
+          <li class="nav-item">
+            <form action="/recipes/{{recipe._id}}">
+              <input
+                type="submit"
+                value="View"
+                class="recipe-nav-button"
+              />
+            </form>
+          </li>
+          <li class="nav-item">
+            <form action="/">
+              <input
+                type="submit"
+                value="Consume"
+                class="recipe-nav-button center-button"
+              />
+            </form>
+          </li>
+          <li class="nav-item">
+            <form action="javascript:void(0);">
+              <input
+                type="submit"
+                value="Buy More"
+                class="recipe-nav-button buy-more-button"
+                id="buy-more-{{recipe.name}}"
+                target="/shoplist/transfer-ingredient"
+              />
+            </form>
+          </li>
         </ul>
 
-        <a href="/recipes/{{recipe._id}}">view</a>
-
-        <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
-          <input
-            type="submit"
-            value="Delete"
-          />
-        </form>
       </div>
     {% endfor %}
   {% endif %}
@@ -67,4 +117,8 @@
       value="+"
     />
   </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="/scripts/recipes/readmore.js" async defer></script>
 {% endblock %}

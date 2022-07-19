@@ -56,6 +56,34 @@ const parseRecipeInput = async (toParse) => {
   return parsedIng;
 }
 
+// split the description into a readmore if it exceeds a certain word count,
+// and also parse newlines into HTML so they can be properly rendered
+const splitDesc = (recipe) => {
+  const CUTOFF_LIMIT = 100; // descriptions above this word count get a readmore
+  const CUTOFF_INDEX = 75; // size of the readmore
+
+  // this will only be an approximation, but splitting by a space is the most
+  // straightforward way to establish a word cutoff if strict precision is not
+  // necessary
+  const thisDesc = recipe.description.split(" ").filter(word => word != "");
+
+  let descVisible = "";
+  let descReadmore = "";
+  if (thisDesc.length <= CUTOFF_LIMIT) { // simplest case: no readmore needed
+    descVisible = thisDesc.join(" ");
+    descVisible = descVisible.replace(/\n/g, "<br />");
+    return [descVisible, descReadmore];
+  }
+
+  descVisible = thisDesc.slice(0, CUTOFF_INDEX).join(" ");
+  descReadmore = thisDesc.slice(CUTOFF_INDEX).join(" ");
+
+  descVisible = descVisible.replace(/\n/g, "<br />");
+  descReadmore = descReadmore.replace(/\n/g, "<br />");
+
+  return [descVisible, descReadmore];
+}
+
 // ========== Routes ==========
 // Index
 router.get("/", async (req, res) => {
@@ -70,9 +98,13 @@ router.get("/", async (req, res) => {
   recipeList.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
   for (let rec of recipeList) {
     rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+    [rec.descVisible, rec.descReadmore] = splitDesc(rec);
   }
 
-  res.render("./recipes/index.liquid", { recipes: recipeList });
+  res.render("./recipes/index.liquid", {
+    recipes: recipeList,
+    source: "index"
+  });
 });
 
 // New
@@ -137,12 +169,14 @@ router.get("/filter", async (req, res) => {
 
   for (let rec of filteredRecipes) {
     rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+    [rec.descVisible, rec.descReadmore] = splitDesc(rec);
   }
   // TODO: custom sort??
   filteredRecipes.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
 
-  res.render("./recipes/results.liquid", {
+  res.render("./recipes/index.liquid", {
     recipes: filteredRecipes,
+    source: "filter",
     quickFilter: true
   });
 });
@@ -184,12 +218,14 @@ router.post("/search", async (req, res) => {
   const searchResults = await Recipe.find(searchParams);
   for (let rec of searchResults) {
     rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
+    [rec.descVisible, rec.descReadmore] = splitDesc(rec);
   }
   // TODO: custom sort??
   searchResults.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
 
-  res.render("./recipes/results.liquid", {
+  res.render("./recipes/index.liquid", {
     recipes: searchResults,
+    source: "search",
     quickFilter: false
   });
 });

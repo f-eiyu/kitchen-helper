@@ -1,15 +1,45 @@
-div.card {
-  width: 30rem;
-  max-width: 90vw;
+/* card styling */
 
-  margin: 20px auto;
-  padding: 0;
-
-  box-shadow: 2px 2px 8px #333;
+div.card-description {
+  margin-left: 4px;
+  margin-bottom: 10px;
 }
 
-div.card > h4 {
-  margin: 12px auto auto 12px;
+a.readmore-link {
+  text-decoration: none;
+}
+
+span.readmore {
+  display: none;
+}
+
+/* bottom navbar */
+
+ul.recipe-nav {
+  background-color: steelblue;
+  
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+ul.recipe-nav > .nav-item {
+  height: 100%;
+  width: 33%;
+
+  margin: 0;
+}
+
+input.recipe-nav-button {
+  width: 100%;
+
+  background: none;
+  border: none;
+  color: white;
+}
+
+input.center-button {
+  border-right: solid white 1px;
+  border-left: solid white 1px;
 }
 
 /* temp */

@@ -4,7 +4,7 @@ div.card {
   width: 30rem;
   max-width: 90vw;
 
-  margin: 20px auto;
+  margin: 25px auto;
 
   box-shadow: 2px 4px 8px #333;
 }
@@ -19,7 +19,7 @@ div.card-title {
 }
 
 div.card-text {
-  margin: 8px 0;
+  margin: 8px 20px;
 }
 
 div.card-title > h4 {
@@ -30,10 +30,25 @@ img.favorite-icon {
   height: 1.3em;
 }
 
-div.card-text {
-  padding: 0 16px;
+/* tags */
+
+#tag-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  margin: 0 16px 10px 16px;
+
+  font-size: small;
 }
 
+div.ing-tag {
+  margin: 1px 3px;
+  padding: 1px 3px;
+
+  border: solid steelblue 1px;
+  border-radius: 3px;
+}
 
 /* bottom-right "new item" button */
 

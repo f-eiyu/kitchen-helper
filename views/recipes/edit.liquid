@@ -23,6 +23,12 @@
         value="{{recipe.name}}"
       />
 
+      <label class="form-label" for="description">Description</label>
+      <textarea
+        class="form-control"
+        name="description"
+      >{{recipe.description}}</textarea>
+
       <div id="ingredients-block">
         {% for ing in recipe.ingredientList %}
           <label class="form-label" for="ingredients">Ingredient</label>

@@ -18,26 +18,6 @@
   width: 80%;
 }
 
-/* general card rendering */
-
-#tag-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-
-  margin: 0 10px 10px 10px;
-
-  font-size: small;
-}
-
-div.ing-tag {
-  margin: 1px 3px;
-  padding: 1px 3px;
-
-  border: solid steelblue 1px;
-  border-radius: 3px;
-}
-
 /* bottom navbar */
 
 ul.ingredient-nav {

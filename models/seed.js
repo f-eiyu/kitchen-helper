@@ -74,6 +74,7 @@ const seed = {
     const recipeSeed = [
       {
         name: "Cinnamon Challenge",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit pharetra sagittis. Maecenas non ex hendrerit, elementum odio at, pharetra justo. Donec sodales vulputate feugiat. Nam nec turpis vel eros bibendum convallis nec ullamcorper erat. Ut eleifend auctor volutpat. Donec volutpat turpis quis nunc dignissim, at bibendum lacus lacinia. Sed in arcu tellus. Nullam sodales fringilla sem, vel malesuada libero facilisis at. Phasellus vulputate efficitur odio, nec condimentum ligula egestas in. Maecenas posuere pretium lectus, eu rutrum libero condimentum ac. Mauris fermentum augue eu velit pharetra gravida. Duis dui justo, sodales mollis diam faucibus, pretium dignissim tellus.\n\Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit pharetra sagittis. Maecenas non ex hendrerit, elementum odio at, pharetra justo. Donec sodales vulputate feugiat. Nam nec turpis vel eros bibendum convallis nec ullamcorper erat. Ut eleifend auctor volutpat. Donec volutpat turpis quis nunc dignissim, at bibendum lacus lacinia. Sed in arcu tellus. Nullam sodales fringilla sem, vel malesuada libero facilisis at. Phasellus vulputate efficitur odio, nec condimentum ligula egestas in. Maecenas posuere pretium lectus, eu rutrum libero condimentum ac. Mauris fermentum augue eu velit pharetra gravida. Duis dui justo, sodales mollis diam faucibus, pretium dignissim tellus.",
         ingredientList: await linkIngredients([
           {name: "cinnamon", amount: 20},
           {name: "water", amount: 250}
@@ -84,6 +85,7 @@ const seed = {
       },
       {
         name: "Seed Smoothie",
+        description: "A recipe that technically exists, but probably shouldn't.",
         ingredientList: await linkIngredients([
           {name: "apple", amount: 1},
           {name: "banana", amount: 1},
@@ -97,6 +99,7 @@ const seed = {
       },
       {
         name: "Water",
+        description: "Look, I really needed this to test something, okay?",
         ingredientList: await linkIngredients([
           {name: "water", amount: 10000},
         ]),
