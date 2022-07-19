@@ -3,6 +3,11 @@ const transferEvent = async (event) => {
   const boxLabelList = document.querySelectorAll(".checkbox-label");
   const checkedIds = [];
 
+  // confirm transferring items
+  const checkedCount = transferButton.getAttribute("count");
+  const transferConfirm = confirm(`Transfer ${checkedCount} item${checkedCount !== "1" ? "s" : ""} to your Kitchen?`);
+  if (!transferConfirm) { return; }
+
   transferButton.setAttribute("disabled", "true");
 
   // enumerate checked items

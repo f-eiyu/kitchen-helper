@@ -15,10 +15,6 @@ router.get("/", async (req, res) => {
   // only retrieve shopping list items belonging to the current user
   const thisShopList = await ShopList.find({owner: req.session.userId});
   const thisUser = await User.findById(req.session.userId);
-  const checkedCount = thisShopList.reduce((acc, item) => {
-    if (item.checked) { return acc + 1; }
-    else { return acc; }
-  }, 0);
   
   // sort checked items to the bottom of the shopping list, if applicable
   if (thisUser.settings.autoshift) {
@@ -36,12 +32,10 @@ router.get("/", async (req, res) => {
     thisShopList.splice(0, thisShopList.length);
     thisShopList.push(...theseUnchecked);
     thisShopList.push(...theseChecked);
+    res.locals.checkedCount = theseChecked.length;
   }
 
-  res.render("./shoplist/index.liquid", {
-    shoplist: thisShopList,
-    transferEnabled: (checkedCount > 0)
-  });
+  res.render("./shoplist/index.liquid", { shoplist: thisShopList });
 });
 
 // New

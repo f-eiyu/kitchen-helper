@@ -31,7 +31,7 @@ As a user, I want to...
     - ✅ **Core design concept: given the ingredients and their quantities in My Kitchen, display all the recipes that can be made with them**.
 1. ✅ edit any prebuilt recipes or recipes that I have added. [EDIT]
 1. ✅ delete any prebuilt recipes or recipes that I have added. [DELETE]
-1. select "I made this recipe!" and have the corresponding ingredients automatically deducted from My Kitchen. [UPDATE]
+1. ✅ select "I made this recipe!" and have the corresponding ingredients automatically deducted from My Kitchen. [UPDATE]
 1. rate recipes that I've made and add comments/notes to them. [NEW]
     - edit my rating. [EDIT]
     - edit or delete comments/notes. [EDIT/DELETE]
@@ -60,7 +60,7 @@ All of the functionalities of this app can be enhanced with data from the other 
     - This will be considered my MVP.
 1. ✅ Once the MVP is working and the three components function independently, I will begin linking them together in the ways described above.
 1. ✅ I will begin by linking My Kitchen to the Shopping List, as it is the most straightforward relationship and will not break anything.
-1. I will then link My Kitchen to the Recipe Assistant, which will be somewhat more complicated.
+1. ✅ I will then link My Kitchen to the Recipe Assistant, which will be somewhat more complicated.
 1. Finally, I will link the Recipe Assistant to the Shopping List, which is also somewhat involved.
 1. If I have extra time after this, I'll tackle the stretch goals in whatever order makes the most logical sense for implementation.
 

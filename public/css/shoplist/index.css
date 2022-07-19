@@ -1,8 +1,64 @@
+/* transfer button */
+
+#transfer {
+  align-self: center;
+  width: 98%;
+  margin-bottom: 15px;
+
+  font-size: 1.2em;
+
+  color: white;
+  background-color: steelblue;
+
+
+  border: solid lightskyblue 2px;
+  border-radius: 8px;
+}
+
+#transfer:hover {
+  border: solid dodgerblue 2px;
+}
+
+#transfer[disabled] {
+  background-color: #89A7D2;
+  border: solid #9DB7DA 2px;
+  color: #ccc;
+}
+
+#transfer[disabled]:hover {
+  border: solid #9DB7DA 2px;
+}
+
+/* general card styling */
+
 div.card {
   padding: 1em 0.5em;
-  max-width: 40vw;
+  max-width: 90vw;
   margin: 0 auto;
 }
+
+div.listitem {
+  display: grid;
+  grid-template: 1fr / 8fr 1fr 1fr;
+}
+
+/* edit and delete buttons */
+
+input.listbutton {
+  font-size: smaller;
+
+  color: white;
+  background-color: steelblue;
+
+  border: solid lightskyblue 1px;
+  border-radius: 5px;
+}
+
+input.listbutton:hover {
+  border: solid dodgerblue 1px;
+}
+
+/* checkbox */
 
 input[type="checkbox"] {
   margin-right: 0.5em;

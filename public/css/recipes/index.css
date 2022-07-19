@@ -1,7 +1,39 @@
+/* search buttons */
+
+#search-buttons {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+form.search-button-form {
+  display: flex;
+  justify-content: center;
+
+  width: 50%;
+}
+
+form.search-button-form > input {
+  width: 95%;
+
+  font-size: 1.2em;
+
+  color: white;
+  background-color: steelblue;
+
+  border: solid lightskyblue 2px;
+  border-radius: 6px;
+}
+
+form.search-button-form > input:hover {
+  border: solid dodgerblue 2px;
+}
+
 /* card styling */
 
 div.card-description {
-  margin-left: 4px;
+  margin-left: 6px;
   margin-bottom: 10px;
 }
 
