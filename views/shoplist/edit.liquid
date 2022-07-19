@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/css/shoplist/shoplist_nav.css">
 {% endblock %}
 
-{% block header %}Editing {{iitem.name}}{% endblock %}
+{% block header %}Editing Shopping List{% endblock %}
 
 {% block content %}
 <div class="card">
@@ -15,30 +15,43 @@
     <fieldset>
       <legend>Editing {{item.name}}</legend>
 
-      <label class="form-label" for="name">Name</label>
-      <input
-        class="form-control"
-        type="text"
-        name="name"
-        value="{{item.name}}"
-      />
+      <div class="card-body">
+        <div class="form-text-row">
+          <label class="form-label" for="name">Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            value="{{item.name}}"
+          />
+        </div>
 
-      <label class="form-label" for="amount">Amount</label>
-      <input
-        class="form-control"
-        type="text"
-        inputmode="numeric"
-        name="amount"
-        value="{{item.amount}}"
-      />
+        <div class="form-text-row">
+          <label class="form-label" for="amount">Amount</label>
+          <input
+            class="form-control"
+            type="text"
+            inputmode="numeric"
+            name="amount"
+            value="{{item.amount}}"
+          />
+        </div>
+      </div>
     </fieldset>
 
-    <input
-    type="submit"
-    value="Edit Item"
-    class="btn btn-success"
-  />
+    <div class="button-container">
+      <input
+        type="button"
+        onclick="location.href='/shoplist';"
+        value="Back"
+      />
+
+      <input
+        type="submit"
+        value="Edit Item"
+        class="btn btn-success"
+      />
+    </div>
   </form>
 </div>
-<a href="/shoplist">Back</a>
 {% endblock %}

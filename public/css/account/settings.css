@@ -1,0 +1,36 @@
+div.form-text-row {
+  margin-left: 12px;
+  margin-bottom: 2px;
+}
+
+div.radio-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+div.radio-buttons > input {
+  margin: 0 4px;
+}
+
+div.radio-buttons > label {
+  margin: auto 16px auto 4px;
+  width: max-content;
+}
+
+label.form-pseudo-tooltip {
+  display: block;
+  font-size: small;
+
+  margin-left: 16px;
+  margin-bottom: 12px;
+}
+
+div.section-divider {
+  height: 2px;
+  width: 100%;
+
+  margin: 15px auto;
+
+  background-color: var(--card-section-divider-color);
+}

@@ -1,3 +1,7 @@
 #global-nav-home {
-  background-color: #333;
+  background-color: var(--nav-bg-selected);
+}
+
+#global-nav-home > a {
+  color: cyan;
 }

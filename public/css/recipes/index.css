@@ -19,15 +19,15 @@ form.search-button-form > input {
 
   font-size: 1.2em;
 
-  color: white;
-  background-color: steelblue;
+  color: var(--button-text);
+  background-color: var(--button-bg);
 
-  border: solid lightskyblue 2px;
+  border: solid var(--button-border) 2px;
   border-radius: 6px;
 }
 
 form.search-button-form > input:hover {
-  border: solid dodgerblue 2px;
+  border: solid var(--button-border-hover) 2px;
 }
 
 /* card styling */
@@ -48,7 +48,7 @@ span.readmore {
 /* bottom navbar */
 
 ul.recipe-nav {
-  background-color: steelblue;
+  background-color: var(--button-bg);
   
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
@@ -66,15 +66,17 @@ input.recipe-nav-button {
 
   background: none;
   border: none;
-  color: white;
+  color: var(--button-text);
 }
 
 input.center-button {
-  border-right: solid white 1px;
-  border-left: solid white 1px;
+  border-right: solid var(--card-bg-color) 1px;
+  border-left: solid var(--card-bg-color) 1px;
 }
 
-/* temp */
-form {
-  z-index: 2;
+
+@media screen and (max-width: 800px) {
+  div.card-description {
+    font-size: 85%;
+  }
 }

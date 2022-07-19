@@ -1,3 +1,7 @@
 #global-nav-kitchen {
-  background-color: #333;
+  background-color: var(--nav-bg-selected);
+}
+
+#global-nav-kitchen > a {
+  color: cyan;
 }

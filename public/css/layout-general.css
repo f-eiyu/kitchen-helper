@@ -1,11 +1,61 @@
-/* dark mode support */
+/* color schemes */
 
 :root[color-mode="light"] {
-  --bgcolor: aliceblue;
+  --bg-color: aliceblue;
+
+  --card-bg-color: white;
+  --card-shadow-color: #333;
+  --card-title-bg-color: #D5E6FD;
+  --card-title-underline: lightskyblue;
+  --card-section-divider-color: #DDD;
+
+  --button-bg: steelblue;
+  --button-text: white;
+  --button-border: lightskyblue;
+  --button-border-hover: dodgerblue;
+
+  --button-disabled-bg: #89A7D2;
+  --button-disabled-text: #CCC;
+  --button-disabled-border: #9DB7DA;
+
+  --nav-bg: black;
+  --nav-bg-selected: #333;
+  --nav-text-color: dodgerblue;
+  --nav-text-color-hover: cyan;
+
+  --tag-border-color: steelblue;
+
+  --new-item-border-color: black;
+  --new-item-bg-color: lightgreen;
 }
 
 :root[color-mode="dark"] {
-  --bgcolor: slategrey;
+  --bg-color: slategrey;
+
+  /* to change */
+  --card-bg-color: #FEF5FB;
+  --card-shadow-color: #333;
+  --card-title-bg-color: #D9ECFF;
+  --card-title-underline: lightskyblue;
+
+  --button-bg: steelblue;
+  --button-text: white;
+  --button-border: lightskyblue;
+  --button-border-hover: dodgerblue;
+
+  --button-disabled-bg: #89A7D2;
+  --button-disabled-text: #ccc;
+  --button-disabled-border: #9DB7DA;
+
+  --nav-bg: black;
+  --nav-bg-selected: #333;
+  --nav-text-color: dodgerblue;
+  --nav-text-color-hover: cyan;
+
+  --tag-border-color: steelblue;
+
+  --new-item-border-color: black;
+  --new-item-bg-color: lightgreen;
 }
 
 /* general aesthetics */
@@ -18,7 +68,7 @@ html {
 body {
   padding: 12px 2% 36px 2%;
   
-  background: var(--bgcolor);
+  background: var(--bg-color);
 }
 
 #content-container {
@@ -34,9 +84,7 @@ h1 {
 }
 
 /* misc */
-hidden {
-  display: none;
-}
+
 
 /* navbar stuff */
 
@@ -44,5 +92,14 @@ hidden {
   display: flex;
   justify-content: flex-start;
 
-  background-color: black;
+  background-color: var(--nav-bg);
+}
+
+#global-nav a {
+  color: dodgerblue;
+  transition: 0.5s;
+}
+
+#global-nav a:hover {
+  color: cyan;
 }

@@ -1,0 +1,37 @@
+@media screen and (max-width: 800px) {
+  div.card {
+    font-size: small;
+  }
+
+  div.card input, div.card textarea {
+    font-size: small;
+  }
+
+  label {
+    font-size: medium;
+  }
+
+  div.form-text-row {
+    grid-template: 0.1fr 1fr / 1fr;
+  }
+
+  div.form-text-row > * {
+    margin: 0;
+  }
+
+  div.favorite-checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  div.section-divider {
+    margin: 22px auto;
+  }
+
+  #ingredients-block {
+    display: grid;
+    grid-template: 1fr / 5fr 2fr;
+  }
+}

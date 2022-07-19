@@ -6,8 +6,8 @@ div.card {
 
   margin: 25px auto;
 
-  background-color: #FEF5FB;
-  box-shadow: 2px 4px 8px #333;
+  background-color: var(--card-bg-color);
+  box-shadow: 2px 4px 8px var(--card-shadow-color);
 }
 
 div.card-title {
@@ -28,7 +28,7 @@ div.card-title > h4 {
 }
 
 img.favorite-icon {
-  height: 1.3em;
+  height: 1.2em;
 }
 
 /* tags */
@@ -45,9 +45,10 @@ img.favorite-icon {
 
 div.ing-tag {
   margin: 1px 3px;
-  padding: 1px 3px;
+  padding: 1px 5px;
 
-  border: solid steelblue 1px;
+  background-color: var(--bg-color);
+  border: solid var(--tag-border-color) 1px;
   border-radius: 3px;
 }
 
@@ -64,11 +65,11 @@ form.new-item-button {
   max-height: 50px;
   max-width: 50px;
 
-  border: solid 1px black;
+  border: solid 1px var(--new-item-border-color);
   border-radius: 100%;
 
-  background-color: lightgreen;
-  box-shadow: 2px 2px 5px black;
+  background-color: var(--new-item-bg-color);
+  box-shadow: 2px 2px 5px var(--new-item-border-color);
 
   font-size: 3em;
 

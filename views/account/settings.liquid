@@ -5,6 +5,7 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="/css/home/home_nav.css">
 <link rel="stylesheet" href="/css/layout-form.css">
+<link rel="stylesheet" href="/css/account/settings.css">
 {% endblock %}
 
 {% block header %}Settings{% endblock %}
@@ -13,82 +14,107 @@
 <div class="card">
   <form action="/account/save-settings?_method=PUT" method="POST">
     <fieldset>
-      <h3>Account Settings</h3>
-      <label class="form-label" for="prefname">Preferred Name</label>
-      <input
-        class="form-control"
-        type="text"
-        name="prefname"
-        value="{{userSettings.prefname}}"
-      />
-      <label class="form-pseudo-tooltip">What should we call you today?</label>
+      <legend>Account Settings</legend>
 
-      <label class="form-label" for="darkmode">Dark Mode?</label>
-      <input
-        type="radio"
-        name="darkmode"
-        id="darkmode-yes"
-        value="on"
-        {% if userSettings.darkmode %} checked {% endif %}
-      />
-      <label for="darkmode-yes">Yes</label>
-      <input
-        type="radio"
-        name="darkmode"
-        id="darkmode-no"
-        value="off"
-        {% if userSettings.darkmode == false %} checked {% endif %}
-      />
-      <label for="darkmode-no">No</label>
-      <label class="form-pseudo-tooltip">Easier on the eyes!</label>
+      <div class="card-body">
+        <h4>User Options</h4>
+        <div class="form-text-row">
+          <label class="form-label" for="prefname">Nickname</label>
+          <input
+            class="form-control"
+            type="text"
+            name="prefname"
+            value="{{userSettings.prefname}}"
+          />
+        </div>
+        <label class="form-pseudo-tooltip">What should we call you today?</label>
+        
+        <div class="form-text-row">
+          <label class="form-label" for="darkmode">Theme</label>
+          <div class="radio-buttons">
+            <input
+              type="radio"
+              name="darkmode"
+              id="darkmode-yes"
+              value="on"
+              {% if userSettings.darkmode %} checked {% endif %}
+            />
+            <label for="darkmode-yes">Dark</label>
+            <input
+              type="radio"
+              name="darkmode"
+              id="darkmode-no"
+              value="off"
+              {% if userSettings.darkmode == false %} checked {% endif %}
+            />
+            <label for="darkmode-no">Classic</label>
+          </div>
+        </div>
+        <label class="form-pseudo-tooltip">Our Dark theme may be easier on the eyes, especially at night.</label>
 
-      <label class="form-label" for="timedisp">Time Display</label>
-      <input
-        type="radio"
-        name="timedisp"
-        id="timedisp-12h"
-        value="12"
-        {% if userSettings.useMilitaryTime == false %} checked {% endif %}
-      />
-      <label for="timedisp-12h">12-hour time</label>
-      <input
-      type="radio"
-      name="timedisp"
-      id="timedisp-24h"
-      value="24"
-      {% if userSettings.useMilitaryTime %} checked {% endif %}
-    />
-    <label for="timedisp-24h">24-hour time</label>
-    
+        <div class="form-text-row">
+          <label class="form-label" for="timedisp">Time</label>
+          <div class="radio-buttons">
+            <input
+              type="radio"
+              name="timedisp"
+              id="timedisp-24h"
+              value="24"
+              {% if userSettings.useMilitaryTime %} checked {% endif %}
+            />
+            <label for="timedisp-24h">24-hour</label>
+            <input
+              type="radio"
+              name="timedisp"
+              id="timedisp-12h"
+              value="12"
+              {% if userSettings.useMilitaryTime == false %} checked {% endif %}
+            />
+            <label for="timedisp-12h">12-hour</label>
+          </div>
+        </div>
 
-      <h3>Shopping List Settings</h3>
-      <label class="form-label" for="shift-checked">Autoshift checked items?</label>
-      <input
-        type="radio"
-        name="autoshift"
-        id="autoshift-yes"
-        value="on"
-        {% if userSettings.autoshift %} checked {% endif %}
-      />
-      <label for="autoshift-yes">Yes</label>
-      <input
-        type="radio"
-        name="autoshift"
-        id="autoshift-no"
-        value="off"
-        {% if userSettings.autoshift == false %} checked {% endif %}
-      />
-      <label for="autoshift-no">No</label>
-      <label class="form-pseudo-tooltip">If autoshift is selected, checked Shopping List items will immediately be moved to the bottom of the list, to reduce visual clutter. This does not affect the original ordering of the shopping list; items will retain their original positions if they are ever unchecked.</label>
+        <div class="section-divider"></div>
 
+        <h4>Shopping List Options</h4>
+        <div class="form-text-row">
+          <label class="form-label" for="shift-checked">Autoshift?</label>
+          <div class="radio-buttons">
+            <input
+              type="radio"
+              name="autoshift"
+              id="autoshift-yes"
+              value="on"
+              {% if userSettings.autoshift %} checked {% endif %}
+            />
+            <label for="autoshift-yes">Yes</label>
+            <input
+              type="radio"
+              name="autoshift"
+              id="autoshift-no"
+              value="off"
+              {% if userSettings.autoshift == false %} checked {% endif %}
+            />
+            <label for="autoshift-no">No</label>
+          </div>
+        </div>
+        <label class="form-pseudo-tooltip">If autoshift is selected, checked Shopping List items will immediately be moved to the bottom to reduce visual clutter. This does not affect the original ordering of the shopping list, so items will retain their original positions if they are un-checked.</label>
+      </div>
     </fieldset>
 
-    <input
-      type="submit"
-      value="Save Settings"
-      class="btn btn-success"
-    />
+    <div class="button-container">
+      <input
+        type="button"
+        onclick="location.href='/';"
+        value="Back"
+      />
+
+      <input
+        type="submit"
+        value="Save Settings"
+        class="btn btn-success"
+      />
+    </div>
   </form>
 </div>
-<a href="/">Back</a>
 {% endblock %}

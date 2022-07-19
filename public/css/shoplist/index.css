@@ -7,26 +7,26 @@
 
   font-size: 1.2em;
 
-  color: white;
-  background-color: steelblue;
+  color: var(--button-text);
+  background-color: var(--button-bg);
 
 
-  border: solid lightskyblue 2px;
+  border: solid var(--button-border) 2px;
   border-radius: 8px;
 }
 
 #transfer:hover {
-  border: solid dodgerblue 2px;
+  border: solid var(--button-border-hover) 2px;
 }
 
 #transfer[disabled] {
-  background-color: #89A7D2;
-  border: solid #9DB7DA 2px;
-  color: #ccc;
+  background-color: var(--button-disabled-bg);
+  border: solid var(--button-disabled-border) 2px;
+  color: var(--button-disabled-text);
 }
 
 #transfer[disabled]:hover {
-  border: solid #9DB7DA 2px;
+  border: solid var(--button-disabled-border) 2px;
 }
 
 /* general card styling */
@@ -47,15 +47,15 @@ div.listitem {
 input.listbutton {
   font-size: smaller;
 
-  color: white;
-  background-color: steelblue;
+  color: var(--button-text);
+  background-color: var(--button-bg);
 
-  border: solid lightskyblue 1px;
+  border: solid var(--button-border) 1px;
   border-radius: 5px;
 }
 
 input.listbutton:hover {
-  border: solid dodgerblue 1px;
+  border: solid var(--button-border-hover) 1px;
 }
 
 /* checkbox */

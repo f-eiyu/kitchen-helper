@@ -1,4 +1,78 @@
-label.form-pseudo-tooltip {
-  display: block;
-  font-size: small;
+body {
+  margin-bottom: 20px;
+}
+
+/* form body styling */
+
+legend {
+  width: 100%;
+  padding: 6px 12px;
+  margin-bottom: 16px;
+  
+  background-color: var(--card-title-bg-color);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom: solid var(--card-title-underline) 2px;
+}
+
+div.card-body {
+  padding: 0 24px;
+}
+
+/* input area styling */
+
+div.form-text-row {
+  display: grid;
+  grid-template: 1fr / 1fr 5fr;
+
+  margin-bottom: 10px;
+}
+
+div.form-text-row > label {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+
+  min-width: 5em;
+}
+
+div.form-text-row > input[type="text"] {
+  width: 95%;
+}
+
+div.form-text-row > input[inputmode="numeric"] {
+  width: 5em;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+}
+
+div.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+/* button styling */
+
+div.button-container {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 10px 16px;
+}
+
+input[type="submit"], input[type="button"] {
+  padding: 4px 10px;
+
+  color: var(--button-text);
+  background-color: var(--button-bg);
+
+  border: solid var(--button-border) 2px;
+  border-radius: 6px;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+  border: solid var(--button-border-hover) 2px;
 }

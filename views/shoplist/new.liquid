@@ -13,30 +13,43 @@
 <div class="card">
   <form action="/shoplist" method="POST">
     <fieldset>
-      <legend>Add what to your Shopping List?</legend>
+      <legend>What are you adding?</legend>
 
-      <label class="form-label" for="name">Name</label>
-      <input
-        class="form-control"
-        type="text"
-        name="name"
-      />
+      <div class="card-body">
+        <div class="form-text-row">
+          <label class="form-label" for="name">Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+          />
+        </div>
 
-      <label class="form-label" for="amount">Amount</label>
-      <input
-        class="form-control"
-        type="text"
-        inputmode="numeric"
-        name="amount"
-      />
+        <div class="form-text-row">
+          <label class="form-label" for="amount">Amount</label>
+          <input
+            class="form-control"
+            type="text"
+            inputmode="numeric"
+            name="amount"
+          />
+        </div>
+      </div>
     </fieldset>
 
-    <input
-    type="submit"
-    value="Add to Shopping List"
-    class="btn btn-success"
-  />
+    <div class="button-container">
+      <input
+        type="button"
+        onclick="location.href='/shoplist';"
+        value="Back"
+      />
+
+      <input
+        type="submit"
+        value="Add to Shopping List"
+        class="btn btn-success"
+      />
+    </div>
   </form>
 </div>
-<a href="/shoplist">Back</a>
 {% endblock %}

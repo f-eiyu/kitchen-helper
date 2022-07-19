@@ -35,7 +35,7 @@ As a user, I want to...
 1. rate recipes that I've made and add comments/notes to them. [NEW]
     - edit my rating. [EDIT]
     - edit or delete comments/notes. [EDIT/DELETE]
-1. automatically add missing recipe ingredients to the Shopping List. [UPDATE]
+1. ✅ automatically add missing recipe ingredients to the Shopping List. [UPDATE]
 1. ✅ "favorite" a recipe for easy access/visibility.
 1. tag and categorize recipes -- "breakfast", "dinner", "snack", "dessert", etc. [EDIT/SHOW]
 
@@ -135,3 +135,17 @@ All of the functionalities of this app can be enhanced with data from the other 
 ![Wireframes 1](./planning/Wireframe1.jpg)
 
 ![Wireframes 2](./planning/Wireframe2.jpg)
+
+
+
+to style
+account
+- login
+- new
+- settings
+
+kitchen
+- show
+
+recipes
+- show
