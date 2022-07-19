@@ -142,7 +142,6 @@ to style
 account
 - login
 - new
-- settings
 
 kitchen
 - show
