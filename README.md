@@ -139,9 +139,7 @@ All of the functionalities of this app can be enhanced with data from the other 
 
 
 to style
-account
-- login
-- new
+
 
 kitchen
 - show

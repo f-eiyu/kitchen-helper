@@ -3,33 +3,50 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="/css/layout/show.css">
+<link rel="stylesheet" href="/css/home/index.css">
 <link rel="stylesheet" href="/css/home/home_nav.css">
 {% endblock %}
 
-
 {% block header %}
-  {% if loggedIn %}
-    Welcome back, {{prefname}}!
-  {% else %}
-    Welcome to Kitchen Organizer!
-  {% endif %}
+
 {% endblock %}
 
 {% block content %}
 {% if loggedIn %}
   <div class="card">
-    <p><a href="/kitchen">kitchen</a></p>
-    <p><a href="/recipes">recipes</a></p>
-    <p><a href="/shoplist">shopping list</a></p>
-    <p><a href="/account/settings">settings</a></p>
-    <p><a href="/seed">seed</a></p>
-    <p><a href="/account/logout">logout</a></p>
+    <h4 class="card-title">
+      {% if loggedIn %}
+        Welcome back, {{prefname}}!
+      {% else %}
+        Welcome to Kitchen Organizer!
+      {% endif %}
+    </h4>
+
+    <div class="card-body">
+      <div id="card-section-app">
+        <h4>Kitchen Organizer</h4>
+          <a class="home-navbutton" href="/kitchen">My Kitchen</a>
+          <a class="home-navbutton" href="/recipes">Recipe Book</a>
+          <a class="home-navbutton" href="/shoplist">Shopping List</a>
+      </div>
+      
+      <div id="card-section-account">
+        <h4>Account</h4>
+          <a class="home-navbutton" href="/seed">Get Recipes from Edamam</a>
+          <a class="home-navbutton" href="/account/settings">Account Settings</a>
+          <a class="home-navbutton" href="/account/logout">Log Out</a>
+      </div>
+    </div>
   </div>
 {% else %}
   <div class="card">
-    <p>Please log in or create an account to use the app.</p>
-    <p><a href="/account/login">login</a></p>
-    <p><a href="/account/create-account">sign up</a></p>
+    <h4>Please log in or create an account to use the app.</h4>
+
+    <div class="card-body">
+      <a class="home-navbutton" href="/account/login">Log In</a>
+      <a class="home-navbutton" href="/account/create-account">Sign Up</a>
+    </div>
   </div>
 {% endif %}
 {% endblock %}

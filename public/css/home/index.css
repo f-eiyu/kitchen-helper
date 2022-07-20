@@ -1,0 +1,37 @@
+h4 {
+  text-align: center;
+}
+
+h4.card-title {
+  padding: 15px;
+
+  border-bottom: solid var(--card-title-underline) 2px;
+
+  background-color: var(--card-title-bg-color);
+  text-align: left;
+}
+
+a.home-navbutton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 50px;
+  width: 80%;
+  margin: 12px auto;
+
+  border: solid var(--button-border) 3px;
+  border-radius: 8px;
+
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  text-decoration: none;
+}
+
+a.home-navbutton:hover {
+  border: solid var(--button-border-hover) 3px;
+}
+
+#card-section-account {
+  margin-top: 40px;
+}
