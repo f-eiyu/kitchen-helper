@@ -9,17 +9,16 @@ const User = require("../models/user.js");
 
 const sanitizeRegex = require("../utils/sanitize-regex.js");
 const parseDate = require("../utils/parse-date.js");
+const linkIngredients = require("../utils/link-ingredients.js");
 
 // ========== Utilities ==========
-// creates a relationship between each ingredient of a recipe and the matching
-// ingredient in the user's kitchen, if the kitchen has it.
-const linkIngredients = async (ingredientList) => {
-  await Promise.all(ingredientList.map(async recipeIng => {
-    const ingRef = await Ingredient.find({name: recipeIng.name});
-    if (ingRef.length) { recipeIng.ingRef = ingRef[0]._id; }
-    else { recipeIng.ingRef = null; }
-  }));
-}
+// const linkIngredients = async (ingredientList) => {
+//   await Promise.all(ingredientList.map(async recipeIng => {
+//     const ingRef = await Ingredient.find({name: recipeIng.name});
+//     if (ingRef.length) { recipeIng.ingRef = ingRef[0]._id; }
+//     else { recipeIng.ingRef = null; }
+//   }));
+// }
 
 // cleans up the raw input provided by req.body
 const parseRecipeInput = async (toParse) => {
@@ -52,6 +51,7 @@ const parseRecipeInput = async (toParse) => {
 
   const parsedIng = {
     name: toParse.name,
+    description: toParse.description,
     ingredientList,
     instructions: toParse.instructions,
     favorite,

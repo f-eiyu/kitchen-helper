@@ -46,7 +46,6 @@ app.use("/recipes", recipeRoutes);
 app.use("/shoplist", shopListRoutes);
 app.use("/account", userRoutes);
 
-// temporary routes, to be reorganized later
 app.get("/", (req, res) => {
   User.findById(req.session.userId)
   .then(user => {
@@ -54,10 +53,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/recipes", (req, res) => {
-  res.render("./recipes/index.liquid");
-});
-
+/* seed with testing data
 const seed = require("./models/seed.js");
 app.get("/seed/ingredients", (req, res) => {
   seed.seedIngredients(req, res);
@@ -78,6 +74,7 @@ app.get("/seed", (req, res) => {
   seed.seedAll(req, res);
   res.send("all dbs seeded<br /><br /><a href='/'>home</a>");
 });
+*/
 
 app.get("*", (req, res) => {
   const { originalUrl } = req;

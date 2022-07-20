@@ -2,8 +2,13 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const fetch = require("node-fetch");
+require("dotenv").config();
 
 const User = require("../models/user.js");
+const Recipe = require("../models/recipe.js");
+
+const linkIngredients = require("../utils/link-ingredients.js");
 
 // ========== Routes ==========
 // New
@@ -99,6 +104,62 @@ router.put("/save-settings", (req, res) => {
       console.error(err);
       res.send("Error saving user settings -- check terminal.");
     });
+});
+
+// Seed recipes
+router.get("/edamam-seed-recipes", async (req, res) => {
+  const owner = req.session.userId;
+
+  const getEdamamUrl = (query) => {
+    return `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_API_KEY}`;
+  }
+
+  const parseEdamamRecipe = async (rawRecipe, query, owner) => {
+    const ingredientList = [];
+    for (let ingredient of rawRecipe.ingredients) {
+      const thisIngredient = {
+        name: ingredient.food.toLowerCase(),
+        amount: ingredient.quantity
+      }
+      ingredientList.push(thisIngredient);
+    }
+    await linkIngredients(ingredientList);
+
+    const parsedRecipe = {
+      name: rawRecipe.label,
+      description: `A delicious ${query} imported from Edamam, just for you!`,
+      ingredientList,
+      instructions: `Refer to <a href="${rawRecipe.url}">${rawRecipe.source}</a> for full cooking instructions.`,
+      tags: [
+        query,
+        "imported from Edamam"
+      ],
+      owner
+    };
+
+    return parsedRecipe;
+  }
+
+  const seedRecipes = [];
+
+  for (let query of ["breakfast", "lunch", "dinner", "snack", "dessert"]) {
+    const apiUrl = getEdamamUrl(query);
+
+    const fetchedRecipesRaw = await fetch(apiUrl);
+    const fetchedRecipes = await fetchedRecipesRaw.json();
+
+    for (let rawRecipe of fetchedRecipes.hits) {
+      const parsedRecipe = await parseEdamamRecipe(rawRecipe.recipe, query, owner);
+      const isNew = ((await Recipe.findOne({
+        name: parsedRecipe.name,
+        owner
+      })) === null);
+      if (isNew) { seedRecipes.push(parsedRecipe); }
+    }
+  }
+  
+  await Recipe.create(seedRecipes);
+  res.send('creation!')
 });
 
 // Log out

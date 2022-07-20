@@ -141,4 +141,5 @@ All of the functionalities of this app can be enhanced with data from the other 
 
 to fix
 - kitchen: purge recipe ingRefs when something is deleted
+- kitchen: adding a recipe adds an empty tag
 - recipe: i broke the buttons oops
