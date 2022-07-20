@@ -141,3 +141,4 @@ All of the functionalities of this app can be enhanced with data from the other 
 
 to fix
 - kitchen: purge recipe ingRefs when something is deleted
+- recipe: i broke the buttons oops

@@ -28,6 +28,7 @@
   --tag-border-color: steelblue;
 
   --new-item-border-color: black;
+  --new-item-shadow-color: var(--new-item-border-color);
   --new-item-bg-color: lightgreen;
 
   --input-bg-color: white;
@@ -60,7 +61,8 @@
 
   --tag-border-color: #4E61BF;
 
-  --new-item-border-color: black;
+  --new-item-border-color: #777;
+  --new-item-shadow-color: none;
   --new-item-bg-color: darkgreen;
 
   --input-bg-color: #111;
