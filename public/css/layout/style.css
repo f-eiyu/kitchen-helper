@@ -5,6 +5,7 @@
   --bg-color: aliceblue;
 
   --card-bg-color: white;
+  --card-border: none;
   --card-shadow-color: #333;
   --card-title-bg-color: #A3C8FB;
   --card-title-underline: steelblue;
@@ -37,7 +38,8 @@
   --bg-color: #00051F;
   
   --card-bg-color: #2F3760;
-  --card-shadow-color: #274396;
+  --card-border: solid #333 3px;
+  --card-shadow-color: rgba(0, 0, 0, 0);
   --card-title-bg-color: #1F2439;
   --card-title-underline: #59618B;
   --card-section-divider-color: #59618B;
@@ -92,6 +94,7 @@ h1 {
 
 div.card {
   background-color: var(--card-bg-color);
+  border: var(--card-border);
   box-shadow: 2px 3px 8px var(--card-shadow-color);
 }
 
