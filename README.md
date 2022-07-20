@@ -138,14 +138,6 @@ All of the functionalities of this app can be enhanced with data from the other 
 
 
 
-to style
-
-kitchen
-- show
-
-recipes
-- show
-
 
 to fix
 - kitchen: purge recipe ingRefs when something is deleted

@@ -3,30 +3,56 @@
 {% block title %}{{ing.name}}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="/css/layout/show.css">
+<link rel="stylesheet" href="/css/kitchen/show.css">
 <link rel="stylesheet" href="/css/kitchen/kitchen_nav.css">
 {% endblock %}
 
 {% block content %}
 <div class="card">
-  {{ing.name}}
-  <ul>
-    <li>amount: {{ing.amount}}</li>
-    <li>tags:
-      {% for tag in ing.tags %}
-        {{tag}}, 
-      {% endfor %}  
-    </li>
-    <li>favorite? {{ing.favorite}}</li>
-    <li>updated: {{ing.renderedDate}}</li>
-    <li>id: {{ing._id}}</li>
-  </ul>
-  <a href="/kitchen/{{ing._id}}/edit">Edit Ingredient</a>
-  <form action="/kitchen/{{ing._id}}?_method=DELETE" method="POST">
-    <input
-      type="submit"
-      value="Delete"
-    />
-  </form>
+  <div class="card-title">
+    <h4>{{ing.name}}</h4>
+    {% if ing.favorite %}
+      <img class="favorite-icon" src="/img/favorite.png" />
+    {% endif %}
+  </div>
+
+  <div class="card-body">
+    You currently have {{ing.amount}} {{ing.name}} on hand.
+
+    {% if ing.tags.size > 0 %}
+      <div id="tag-section">
+        <h5>Tags</h5>
+        <div id="tag-box">
+          {% for tag in ing.tags %}
+            <div class="ing-tag">{{tag}}</div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    Last updated {{ing.renderedDate}}.
+  </div>
+
+  <div class="button-container">
+    <form action="/kitchen">
+      <input
+        type="submit"
+        value="Back"
+      />
+    </form>
+    <form action="/kitchen/{{ing._id}}/edit" method="GET">
+      <input
+        type="submit"
+        value="Edit"
+      />
+    </form>
+    <form action="/kitchen/{{ing._id}}?_method=DELETE" method="POST">
+      <input
+        type="submit"
+        value="Delete"
+      />
+    </form>
+  </div>
 </div>
-<a href="/kitchen">Back</a>
 {% endblock %}
