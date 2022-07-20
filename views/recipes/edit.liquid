@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="/css/recipes/recipe_nav.css">
 {% endblock %}
 
-{% block header %}Editing Recipe{% endblock %}
-
 {% block content %}
 <div class="card">
   <form action="/recipes/{{recipe._id}}?_method=PUT" method="POST">

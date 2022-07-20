@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="/css/kitchen/kitchen_nav.css">
 {% endblock %}
 
-{% block header %}Editing Ingredient{% endblock %}
-
 {% block content %}
 <div class="card">
   <form action="/kitchen/{{ing._id}}?_method=PUT" method="POST">

@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="/css/account/settings.css">
 {% endblock %}
 
-{% block header %}Settings{% endblock %}
-
 {% block content %}
 <div class="card">
   <form action="/account/save-settings?_method=PUT" method="POST">
@@ -17,7 +15,7 @@
       <legend>Account Settings</legend>
 
       <div class="card-body">
-        <h4>User Options</h4>
+        <h5>User Options</h5>
         <div class="form-text-row">
           <label class="form-label" for="prefname">Nickname</label>
           <input
@@ -76,7 +74,7 @@
 
         <div class="section-divider"></div>
 
-        <h4>Shopping List Options</h4>
+        <h5>Shopping List Options</h5>
         <div class="form-text-row">
           <label class="form-label" for="shift-checked">Autoshift?</label>
           <div class="radio-buttons">

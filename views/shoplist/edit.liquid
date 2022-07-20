@@ -7,8 +7,6 @@
 <link rel="stylesheet" href="/css/shoplist/shoplist_nav.css">
 {% endblock %}
 
-{% block header %}Editing Shopping List{% endblock %}
-
 {% block content %}
 <div class="card">
   <form action="/shoplist/{{item._id}}?_method=PUT" method="POST">
