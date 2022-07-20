@@ -6,7 +6,14 @@
 <link rel="stylesheet" href="/css/home/home_nav.css">
 {% endblock %}
 
-{% block header %}Welcome, {{prefname}}!{% endblock %}
+
+{% block header %}
+  {% if loggedIn %}
+    Welcome back, {{prefname}}!
+  {% else %}
+    Welcome to Kitchen Organizer!
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 {% if loggedIn %}
@@ -20,7 +27,7 @@
   </div>
 {% else %}
   <div class="card">
-    <p>Please log in or create an account to use the app!</p>
+    <p>Please log in or create an account to use the app.</p>
     <p><a href="/account/login">login</a></p>
     <p><a href="/account/create-account">sign up</a></p>
   </div>

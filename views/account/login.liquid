@@ -5,6 +5,7 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="/css/home/home_nav.css">
 <link rel="stylesheet" href="/css/layout/forms.css">
+<link rel="stylesheet" href="/css/account/login.css">
 {% endblock %}
 
 {% block header %}Log In{% endblock %}
@@ -13,27 +14,41 @@
 <div class="card">
   <form action="/account/login" method="POST">
     <fieldset>
-      <legend>Enter your username and password below:</legend>
-      <label class="form-label" for="username">Username</label>
-      <input
-        class="form-control"
-        type="text"
-        name="username"
-      />
+      <legend>Enter your username and password</legend>
 
-      <label class="form-label" for="password">Password</label>
-      <input
-        class="form-control"
-        type="password"
-        name="password"
-      />
+      <div class="card-body">
+        <div class="form-text-row">
+          <label class="form-label" for="username">Username</label>
+          <input
+            class="form-control"
+            type="text"
+            name="username"
+          />
+        </div>
+
+        <div class="form-text-row">
+          <label class="form-label" for="password">Password</label>
+          <input
+            class="form-control"
+            type="password"
+            name="password"
+          />
+        </div>
+      </div>
     </fieldset>
 
-    <input
-      type="submit"
-      value="Log In"
-    />
+    <div class="button-container">
+      <input
+        type="button"
+        onclick="location.href='/';"
+        value="Back"
+      />
+
+      <input
+        type="submit"
+        value="Log In"
+      />
+    </div>
   </form>
 </div>
-<a href="/">Back</a>
 {% endblock %}
