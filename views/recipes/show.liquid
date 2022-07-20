@@ -3,44 +3,98 @@
 {% block title %}{{recipe.name}}{% endblock %}
 
 {% block stylesheets %}
+<link rel="stylesheet" href="/css/layout/show.css">
+<link rel="stylesheet" href="/css/recipes/show.css">
 <link rel="stylesheet" href="/css/recipes/recipe_nav.css">
 {% endblock %}
 
 {% block content %}
 <div class="card">
-  {{recipe.name}}
-  <ul>
-    <li>ingredients:
+  <div class="card-title">
+    <h4>{{recipe.name}}</h4>
+    {% if recipe.favorite %}
+      <img class="favorite-icon" src="/img/favorite.png" />
+    {% endif %}
+  </div>
+  
+  <div class="card-body">
+    <div class="card-section" id="description-section">
+      {{recipe.description}}
+    </div>
+    
+    <div class="section-divider"></div>
+
+    <div class="card-section" id="ingredient-section">
+      <h5>Ingredients</h5>
       <ul>
         {% for ing in recipe.ingredientList %}
-          <li>{{ing.name}}: {{ing.amount}}</li>
+          <li>
+            <input
+              type="checkbox"
+              {% if ing.sufficient %} checked {% endif %}
+            />
+            {{ing.name}} ({{ing.onHand}} / {{ing.amount}})
+          </li>
         {% endfor %}
       </ul>
-    </li>
-    <li>instructions: {{recipe.instructions}}</li>
-    <li>tags:
-      {% for tag in recipe.tags %}
-        {{tag}}, 
-      {% endfor %}  
-    </li>
-    <li>notes: 
-      {% for note in recipe.notes %}
-        {{note}},
-      {% endfor %}</li>
+    </div>
 
-    <li>favorite? {{recipe.favorite}}</li>
-    <li>updated: {{recipe.renderedDate}}</li>
-    <li>id: {{recipe._id}}</li>
-  </ul>
-  <p><a href="/recipes/{{recipe._id}}/edit">Edit Recipe</a></p>
-  <p><a href="/recipes/{{recipe._id}}/make">I made this!</a></p>
-  <p><a href="/recipes/{{recipe._id}}/transfer">Transfer to SL</a></p>
-  <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
-    <input
-      type="submit"
-      value="Delete"
-    />
-  </form>
+    <div class="section-divider"></div>
+
+    <div class="card-section">
+      <h5>Instructions</h5>
+      <div id="instruction-body">{{recipe.instructions}}</div>
+    </div>
+
+    <div class="section-divider"></div>
+
+
+    <div class="card-section">
+      {% if recipe.tags.size > 0 %}
+        <div id="tag-section">
+          <h5>Tags</h5>
+          <div id="tag-box">
+            {% for tag in recipe.tags %}
+              <div class="ing-tag">{{tag}}</div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if recipe.notes.size > 0 %}
+        <div id="note-section">
+          <h5>Notes</h5>
+          <ul>
+            {% for note in recipe.notes %}
+            <li>{{note}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      Last updated {{recipe.renderedDate}}.
+    </div>
+  </div>
+  
+  <div class="button-container">
+    <form action="/recipes">
+      <input
+        type="submit"
+        value="Back"
+      />
+    </form>
+    <form action="/recipes/{{recipe._id}}/edit" method="GET">
+      <input
+        type="submit"
+        value="Edit"
+      />
+    </form>
+    <form action="/recipes/{{recipe._id}}?_method=DELETE" method="POST">
+      <input
+        type="submit"
+        value="Delete"
+      />
+    </form>
+  </div>
 </div>
-<a href="/recipes">Back</a>
 {% endblock %}

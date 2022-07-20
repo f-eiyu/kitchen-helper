@@ -1,0 +1,21 @@
+#instruction-body {
+  margin-left: 12px;
+}
+
+#ingredient-section > ul {
+  padding-left: 12px;
+  list-style-type: none;
+}
+
+#ingredient-section > ul > li {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin: 0 10px 0 0;
+}
+
+#tag-section, #note-section {
+  margin-bottom: 22px;
+}

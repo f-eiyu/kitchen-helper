@@ -55,6 +55,7 @@ const parseDate = async (toParse, useMilitaryTime = false) => {
 
   if (useMilitaryTime) {
     outHrs = toParse.getHours();
+    if (outHrs < 10) { outHrs = "0" + outHrs; }
   }
   else { // convert the 0-23 hour value into proper 12-hour time
     let hour = toParse.getHours();

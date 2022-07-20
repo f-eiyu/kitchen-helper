@@ -24,6 +24,11 @@ const linkIngredients = async (ingredientList) => {
 // cleans up the raw input provided by req.body
 const parseRecipeInput = async (toParse) => {
   const ingredientList = [];
+  
+  if (typeof toParse.ingredients !== "object") {
+    toParse.ingredients = [toParse.ingredients];
+    toParse.amounts = [toParse.amounts];
+  }
   toParse.ingredients.forEach((ing, i) => {
     if (!ing) { return; }
     ingredientList.push({
@@ -236,8 +241,21 @@ router.get("/:recipeId", async (req, res) => {
   const { useMilitaryTime } = user.settings;
 
   Recipe.findById(req.params.recipeId)
-    .then(recipe => {
+    .then(async recipe => {
       recipe.renderedDate = parseDate(recipe.updatedAt, useMilitaryTime);
+
+      // check if we have sufficient amounts of the desired ingredients
+      for (let ing of recipe.ingredientList) {
+        ing.sufficient = false;
+        ing.onHand = 0
+        if (ing.ingRef) {
+          const ingRef = await Ingredient.findById(ing.ingRef);
+          if (ingRef && ingRef.amount >= ing.amount) {
+            ing.sufficient = true;
+            ing.onHand = ingRef.amount;
+          }
+        }
+      }
       res.render("./recipes/show.liquid", { recipe })
     })
     .catch(err => {

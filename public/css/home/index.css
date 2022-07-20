@@ -1,14 +1,9 @@
-h4 {
-  text-align: center;
+div.card-body {
+  padding: 16px 24px;
 }
 
-h4.card-title {
-  padding: 15px;
-
-  border-bottom: solid var(--card-title-underline) 2px;
-
-  background-color: var(--card-title-bg-color);
-  text-align: left;
+div.card-body h4 {
+  text-align: center;
 }
 
 a.home-navbutton {
