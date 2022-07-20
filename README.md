@@ -135,11 +135,3 @@ All of the functionalities of this app can be enhanced with data from the other 
 ![Wireframes 1](./planning/Wireframe1.jpg)
 
 ![Wireframes 2](./planning/Wireframe2.jpg)
-
-
-
-
-to fix
-- kitchen: purge recipe ingRefs when something is deleted
-- kitchen: adding a recipe adds an empty tag
-- recipe: i broke the buttons oops

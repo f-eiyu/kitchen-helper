@@ -100,7 +100,7 @@ router.get("/", async (req, res) => {
   /* TODO: sort by something other than reverse chronological
   const sortOrder = req.query.sort;
   */
-  recipeList.sort((rec1, rec2) => (rec2.updatedAt - rec1.updatedAt));
+  recipeList.sort((rec1, rec2) => (rec2.createdAt - rec1.createdAt));
   for (let rec of recipeList) {
     rec.renderedDate = parseDate(rec.updatedAt, useMilitaryTime);
     [rec.descVisible, rec.descReadmore] = splitDesc(rec);
@@ -196,7 +196,9 @@ router.post("/search", async (req, res) => {
   const { useMilitaryTime } = user.settings;
 
   const body = req.body;
-  const searchParams = {};
+  const searchParams = {
+    owner: req.session.userId
+  };
 
   // we use if statements here to explicitly not set the search parameters
   // unless they are being searched for. this is particularly relevant for the
@@ -338,7 +340,7 @@ router.get("/:recipeId/transfer", async (req, res) => {
       }
     );
   }
-  res.redirect(`/recipes/${req.params.recipeId}`);
+  res.sendStatus(204);
 });
 
 // Update

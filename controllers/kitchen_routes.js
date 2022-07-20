@@ -3,10 +3,53 @@ const express = require("express");
 const router = express.Router();
 
 const Ingredient = require("../models/ingredient.js");
+const Recipe = require("../models/recipe.js");
 const User = require("../models/user.js");
 
 const sanitizeRegex = require("../utils/sanitize-regex.js");
 const parseDate = require("../utils/parse-date.js");
+
+
+// ========== Utilities ==========
+// updates all ingRef fields in ingredientLists of recipes belonging to the
+// current user
+const updateIngRefs = async (userId, newIng = null, oldIngName = null) => {
+  // clear ingRef fields matching the old name, if applicable
+  if (oldIngName !== null) {
+    await Recipe.updateMany(
+      {
+        "ingredientList.name": oldIngName,
+        owner: userId
+      },
+      {
+        "ingredientList.$.ingRef": null
+      },
+      {
+        new: true,
+        upsert: false,
+        timestamps: false
+      }
+    )
+  }
+
+  // update ingRef fields matching the new name, if applicable
+  if (newIng !== null) {
+    await Recipe.updateMany(
+      {
+        "ingredientList.name": newIng.name,
+        owner: userId
+      },
+      {
+        "ingredientList.$.ingRef": newIng._id
+      },
+      {
+        new: true,
+        upsert: false,
+        timestamps: false
+      }
+    );
+  }
+}
 
 // ========== Routes ==========
 // Index
@@ -57,7 +100,9 @@ router.get("/new", (req, res) => {
 
 // Create
 router.post("/", (req, res) => {
-  const tagArray = req.body.tags.split(",").map(tag => tag.trim());
+  const tagArray = req.body.tags.split(",")
+    .map(tag => tag.trim())
+    .filter(tag => tag !== "");
   const favorite = (req.body.favorite === "on");
 
   req.body.tags = tagArray;
@@ -68,6 +113,7 @@ router.post("/", (req, res) => {
     .then(ing => {
       User.findById(req.body.owner)
         .then(user => {
+          updateIngRefs(user._id, ing);
           user.ingredients.push(ing);
           user.save();
           console.log(`Created ingredient "${ing.name}" for user "${user.username}".`)
@@ -115,7 +161,7 @@ router.get("/:ingId/edit", (req, res) => {
 });
 
 // Update
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const tagArray = req.body.tags.split(",").map(tag => tag.trim());
   if (tagArray.every(el => el === "")) { req.body.tags = []; }
   else { req.body.tags = tagArray; }
@@ -123,12 +169,18 @@ router.put("/:id", (req, res) => {
   const favorite = (req.body.favorite === "on");
   req.body.favorite = favorite;
 
+  const oldIngName = (await Ingredient.findById(req.params.id)).name;
+
   Ingredient.findByIdAndUpdate(req.params.id, req.body,
     {
       new: true,
       runValidators: true
     })
-    .then(ing => res.redirect(`/kitchen/${req.params.id}`))
+    .then(async ing => {
+      console.log(ing.name, oldIngName)
+      await updateIngRefs(req.session.userId, ing, oldIngName);
+      res.redirect(`/kitchen/${req.params.id}`);
+    })
     .catch(err => {
       console.error(err);
       res.send(`Error in /kitchen/${req.params.ingId} EDIT -- check the terminal.`);
@@ -149,6 +201,7 @@ router.delete("/:ingId", async (req, res) => {
     }
     // then, delete recipe from the database
     console.log(`Deleting ingredient "${toDel.name}" for user ${user.username}.`)
+    await updateIngRefs(user._id, null, toDel.name);
     await toDel.delete();
 
     res.redirect("/kitchen");

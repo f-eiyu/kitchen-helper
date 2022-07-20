@@ -87,8 +87,9 @@
               />
             </form>
           </li>
+
           <li class="nav-item">
-            <form action="/">
+            <form action="/recipes/{{recipe._id}}/make">
               <input
                 type="submit"
                 value="I made this!"
@@ -96,8 +97,9 @@
               />
             </form>
           </li>
+
           <li class="nav-item">
-            <form action="javascript:void(0);">
+            <form action="/recipes/{{recipe._id}}/transfer">
               <input
                 type="submit"
                 value="SL Transfer"
