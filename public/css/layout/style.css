@@ -1,12 +1,13 @@
 /* color schemes */
 
 :root[color-mode="light"] {
+  --body-text-color: black;
   --bg-color: aliceblue;
 
   --card-bg-color: white;
   --card-shadow-color: #333;
-  --card-title-bg-color: #D5E6FD;
-  --card-title-underline: lightskyblue;
+  --card-title-bg-color: #A3C8FB;
+  --card-title-underline: steelblue;
   --card-section-divider-color: #DDD;
 
   --button-bg: steelblue;
@@ -21,41 +22,46 @@
   --nav-bg: black;
   --nav-bg-selected: #333;
   --nav-text-color: dodgerblue;
-  --nav-text-color-hover: cyan;
+  --nav-text-color-selected: cyan;
 
   --tag-border-color: steelblue;
 
   --new-item-border-color: black;
   --new-item-bg-color: lightgreen;
+
+  --input-bg-color: white;
 }
 
 :root[color-mode="dark"] {
-  --bg-color: slategrey;
+  --body-text-color: #BBB;
+  --bg-color: #00051F;
+  
+  --card-bg-color: #2F3760;
+  --card-shadow-color: #274396;
+  --card-title-bg-color: #1F2439;
+  --card-title-underline: #59618B;
+  --card-section-divider-color: #59618B;
 
-  /* to change */
-  --card-bg-color: #FEF5FB;
-  --card-shadow-color: #333;
-  --card-title-bg-color: #D9ECFF;
-  --card-title-underline: lightskyblue;
-
-  --button-bg: steelblue;
+  --button-bg: #202641;
   --button-text: white;
-  --button-border: lightskyblue;
-  --button-border-hover: dodgerblue;
+  --button-border: steelblue;
+  --button-border-hover: royalblue;
 
-  --button-disabled-bg: #89A7D2;
-  --button-disabled-text: #ccc;
-  --button-disabled-border: #9DB7DA;
+  --button-disabled-bg: #394063;
+  --button-disabled-text: #888;
+  --button-disabled-border: #888;
 
   --nav-bg: black;
   --nav-bg-selected: #333;
   --nav-text-color: dodgerblue;
-  --nav-text-color-hover: cyan;
+  --nav-text-color-selected: deepskyblue;
 
-  --tag-border-color: steelblue;
+  --tag-border-color: #4E61BF;
 
   --new-item-border-color: black;
-  --new-item-bg-color: lightgreen;
+  --new-item-bg-color: darkgreen;
+
+  --input-bg-color: #111;
 }
 
 /* general aesthetics */
@@ -68,6 +74,7 @@ html {
 body {
   padding: 12px 2% 36px 2%;
   
+  color: var(--body-text-color);
   background: var(--bg-color);
 }
 
@@ -83,8 +90,10 @@ h1 {
   margin-bottom: 25px;
 }
 
-/* misc */
-
+div.card {
+  background-color: var(--card-bg-color);
+  box-shadow: 2px 3px 8px var(--card-shadow-color);
+}
 
 /* navbar stuff */
 
@@ -97,7 +106,7 @@ h1 {
 
 #global-nav a {
   color: dodgerblue;
-  transition: 0.5s;
+  transition: 0.7s;
 }
 
 #global-nav a:hover {

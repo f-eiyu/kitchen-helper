@@ -21,6 +21,28 @@ div.card-body {
 
 /* input area styling */
 
+input[type="text"] {
+  color: var(--body-text-color);
+  background-color: var(--input-bg-color);
+}
+
+input[type="text"]:active {
+  color: var(--body-text-color);
+  background-color: var(--input-bg-color);
+}
+
+input[type="text"]:focus {
+  color: var(--body-text-color);
+  background-color: var(--input-bg-color);
+}
+
+/* i think bootstrap does something screwy with textareas... the only real
+solution i've found is, unfortunately, to override with !important */
+textarea {
+  color: var(--body-text-color) !important;
+  background-color: var(--input-bg-color) !important;
+}
+
 div.form-text-row {
   display: grid;
   grid-template: 1fr / 1fr 5fr;

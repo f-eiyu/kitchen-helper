@@ -3,5 +3,5 @@
 }
 
 #global-nav-shoplist > a {
-  color: cyan;
+  color: var(--nav-text-color-selected);
 }

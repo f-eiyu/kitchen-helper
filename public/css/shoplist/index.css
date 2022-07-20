@@ -40,6 +40,8 @@ div.card {
 div.listitem {
   display: grid;
   grid-template: 1fr / 8fr 1fr 1fr;
+
+  margin: auto 12px;
 }
 
 /* edit and delete buttons */

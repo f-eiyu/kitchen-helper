@@ -5,9 +5,6 @@ div.card {
   max-width: 90vw;
 
   margin: 25px auto;
-
-  background-color: var(--card-bg-color);
-  box-shadow: 2px 4px 8px var(--card-shadow-color);
 }
 
 div.card-title {

@@ -2,7 +2,7 @@ div.section-divider {
   height: 2px;
   width: 100%;
 
-  margin: 15px auto;
+  margin: 22px auto;
 
   background-color: var(--card-section-divider-color);
 }
