@@ -16,7 +16,7 @@ const buyMore = async (event) => {
   
   // create/upsert shopping list item
   const targetUrl = buyMoreButton.getAttribute("target");
-   const fetchInit = {
+  const fetchInit = {
     method: "POST",
     headers: {
       "Accept": "application/json",
@@ -24,9 +24,9 @@ const buyMore = async (event) => {
     },
     body: JSON.stringify({...newItem}),
     redirect: "follow"
-   };
-   const response = await fetch(targetUrl, fetchInit);
-   alert("Shopping list updated!");
+  };
+  const response = await fetch(targetUrl, fetchInit);
+  alert("Shopping list updated!");
 }
 
 document.querySelectorAll(".buy-more-button").forEach(button => {

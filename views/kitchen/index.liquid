@@ -39,7 +39,10 @@
             <img class="favorite-icon" src="/img/favorite.png" />
           {% endif %}
         </div>
-        <div class="card-text">{{ing.amount}} on hand as of {{ing.renderedDate}}.</div>
+        <div class="card-text">
+          {{ing.amount}} on hand as of {{ing.renderedDate}}.
+          {% if ing.amount == 0 %}Time to buy some more?{% endif%}
+        </div>
 
         {% if ing.tags.size > 0 %}
           <div id="tag-container">
@@ -59,15 +62,19 @@
               />
             </form>
           </li>
+
           <li class="nav-item">
-            <form action="/">
+            <form action="javascript:void(0);">
               <input
                 type="submit"
                 value="Consume"
-                class="ingredient-nav-button center-button"
+                class="ingredient-nav-button center-button consume-button"
+                id="consume-{{ing.name}}"
+                target="/kitchen/consume-ingredient"
               />
             </form>
           </li>
+
           <li class="nav-item">
             <form action="javascript:void(0);">
               <input
@@ -93,5 +100,6 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/scripts/kitchen/consume.js" async defer></script>
 <script src="/scripts/kitchen/buymore.js" async defer></script>
 {% endblock %}

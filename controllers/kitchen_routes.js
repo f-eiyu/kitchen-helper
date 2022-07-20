@@ -187,6 +187,19 @@ router.put("/:id", async (req, res) => {
     });
 });
 
+// Consume
+router.post("/consume-ingredient", (req, res) => {
+  Ingredient.findOne({
+      name: req.body.name,
+      owner: req.session.userId
+  })
+    .then(ing => {
+      ing.amount = Math.max(ing.amount - req.body.consumeAmount, 0);
+      ing.save();
+    })
+    .then(() => res.sendStatus(200));
+});
+
 // Delete
 router.delete("/:ingId", async (req, res) => {
   const toDel = await Ingredient.findById(req.params.ingId);
