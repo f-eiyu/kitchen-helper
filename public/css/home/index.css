@@ -30,3 +30,11 @@ a.home-navbutton:hover {
 #card-section-account {
   margin-top: 40px;
 }
+
+@media screen and (max-width: 800px) {
+  body {
+    padding: 0;
+  }
+
+  
+}

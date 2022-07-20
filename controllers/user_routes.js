@@ -107,7 +107,11 @@ router.put("/save-settings", (req, res) => {
 });
 
 // Seed recipes
-router.get("/edamam-seed-recipes", async (req, res) => {
+router.get("/edamam-seed-recipes", (req, res) => {
+  res.render("./account/edamam-confirm.liquid");
+});
+
+router.get("/edamam-seed-recipes/seed", async (req, res) => {
   const owner = req.session.userId;
 
   const getEdamamUrl = (query) => {
@@ -152,14 +156,16 @@ router.get("/edamam-seed-recipes", async (req, res) => {
       const parsedRecipe = await parseEdamamRecipe(rawRecipe.recipe, query, owner);
       const isNew = ((await Recipe.findOne({
         name: parsedRecipe.name,
-        owner
+        owner,
+        tags: "imported from Edamam"
       })) === null);
       if (isNew) { seedRecipes.push(parsedRecipe); }
     }
   }
-  
+
   await Recipe.create(seedRecipes);
-  res.send('creation!')
+  
+  res.redirect("/recipes");
 });
 
 // Log out

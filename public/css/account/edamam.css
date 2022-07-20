@@ -1,0 +1,19 @@
+div.button-container {
+  margin-top: 24px;
+}
+
+#pleasewait {
+  display: none;
+  margin-top: 18px;
+  text-align: center;
+}
+
+input[disabled] {
+  background-color: var(--button-disabled-bg);
+  border: solid var(--button-disabled-border) 2px;
+  color: var(--button-disabled-text);
+}
+
+input[disabled]:hover {
+  border: solid var(--button-disabled-border) 2px;
+}

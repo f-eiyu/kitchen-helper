@@ -1,0 +1,51 @@
+{% layout "layout.liquid" %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/layout/show.css">
+<link rel="stylesheet" href="/css/home/index.css">
+<link rel="stylesheet" href="/css/account/edamam.css">
+<link rel="stylesheet" href="/css/home/home_nav.css">
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+{% if loggedIn %}
+  <div class="card">
+    <div class="card-title">
+      <h4>Import Recipes from Edamam</h4>
+    </div>
+
+    <div class="card-body">
+      Get your recipe book started by importing some recipes from Edamam, a powerful online food database! This will only take a few seconds, and will add a lot of recipes to your collection: up to twenty each of breakfast, lunch, dinner, snacks, and desserts. Meal inspiration has never been easier. No pressure, though — you can come back and import these recipes any time!
+
+      <div id="pleasewait">Please wait -- your recipes are being fetched!</div>
+
+      <div class="button-container">
+        <form action="/">
+          <input
+            type="submit"
+            value="Back"
+          />
+        </form>
+
+        <form action="/account/edamam-seed-recipes/seed">
+          <input
+            type="submit"
+            id="import"
+            value="Import"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="/scripts/account/edamam-import-confirm.js" async defer></script>
+{% endblock %}
